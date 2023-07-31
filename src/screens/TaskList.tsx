@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import {Tasks} from '../types/types';
 import Task from '../components/Task';
 
