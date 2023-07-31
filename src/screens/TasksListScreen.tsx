@@ -1,28 +1,24 @@
-import {View, Text, TouchableOpacity} from 'react-native';
-import React, {useEffect} from 'react';
+import {TaskListItem} from '../components';
 import {useAppNavigation, useTasksContext} from '../hooks';
-import {AddTaskButton} from '../components';
-import {Task} from '../types';
+import {View, FlatList} from 'react-native';
+import Button from '../components/Button';
+import React from 'react';
 
 const TasksListScreen = () => {
-  const {tasks, setTasks} = useTasksContext();
+  const {tasks} = useTasksContext();
   const {navigate} = useAppNavigation();
 
-  useEffect(() => {
-    setTasks();
-  }, [setTasks]);
-
-  const onDetailPress = (task: Task) => {
-    navigate('TaskDetails', {task});
-  };
   return (
-    <View>
-      {tasks.map(x => (
-        <TouchableOpacity onPress={() => onDetailPress(x)}>
-          <Text>{JSON.stringify(x, null, 4)}</Text>
-        </TouchableOpacity>
-      ))}
-      <AddTaskButton />
+    <View style={{flex: 1}}>
+      <FlatList
+        data={tasks}
+        renderItem={({item}) => <TaskListItem task={item} />}
+      />
+      <Button
+        color="#03DAC590"
+        title="Create task"
+        onPress={() => navigate('TaskCreation')}
+      />
     </View>
   );
 };

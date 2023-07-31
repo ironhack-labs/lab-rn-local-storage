@@ -21,7 +21,6 @@ export type TasksContextState = {
   addTask: (task: Task) => void;
   updateTaskStatus: (taskId: number) => void;
   removeTask: (taskId: number) => void;
-  setTasks: () => void;
 };
 
 export type TasksReducerState = {
@@ -59,3 +58,5 @@ export type ReadonlyInputProps = {
   inputProps?: TextInputProps;
   value?: string;
 };
+
+export type TaskListItemProps = {task: Task};
