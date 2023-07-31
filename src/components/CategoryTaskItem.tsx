@@ -20,11 +20,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     borderRadius: 4,
     backgroundColor: '#00000025',
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
+    marginTop: 9
   },
   categoryTitle: {
     fontSize: 12,
     fontWeight: '600',
+    color: 'black'
   },
   selectedCategoryTitle: {
     color: 'white',

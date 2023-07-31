@@ -12,7 +12,8 @@ type Action =
   | { type: 'UPDATE_TASK'; payload: { id: number; completed: boolean } }
   | { type: 'DELETE_TASK'; payload: number }
   | { type: 'ADD_CATEGORY'; payload: string }
-  | { type: 'SELECT_CATEGORY'; payload: string };
+  | { type: 'SELECT_CATEGORY'; payload: string }
+  | { type: 'TOGGLE_TASK'; payload: number }
 
 type TasksDispatch = Dispatch<Action>;
 
@@ -47,6 +48,13 @@ const tasksReducer = (state: TasksState, action: Action): TasksState => {
         ...state,
         selectedCategory: action.payload,
       };
+      case 'TOGGLE_TASK':
+        return {
+          ...state,
+          tasks: state.tasks.map((task) =>
+            task.id === action.payload ? { ...task, completed: !task.completed } : task
+          ),
+        };
     default:
       return state;
   }
