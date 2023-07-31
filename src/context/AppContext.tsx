@@ -1,6 +1,7 @@
 import React, {
   PropsWithChildren,
   createContext,
+  useCallback,
   useEffect,
   useReducer,
 } from 'react';
@@ -28,10 +29,15 @@ import {getData, saveData} from '../helpers/storage';
 
 type AppState = {
   tasks: Task[];
+  showFilterModal: boolean;
+  activeCategory: string | null;
   addTask: (newTask: NewTask) => void;
   updateTask: (updatedTask: Task) => void;
   deleteTask: (id: number) => void;
   toggleTask: (id: number) => void;
+  getCategories: () => string[];
+  toggleFilterModal: () => void;
+  setActiveCategory: (category: string | null) => void;
 };
 
 type ACTION_TYPE =
@@ -39,16 +45,23 @@ type ACTION_TYPE =
   | {type: 'ADD_TASK'; payload: Task}
   | {type: 'UPDATE_TASK'; payload: Task}
   | {type: 'DELETE_TASK'; payload: number}
-  | {type: 'TOGGLE_TASK'; payload: number};
+  | {type: 'TOGGLE_TASK'; payload: number}
+  | {type: 'SET_ACTIVE_CATEGORY'; payload: string | null}
+  | {type: 'TOGGLE_FILTER_MODAL'};
 
 type AppProviderProps = PropsWithChildren<{}>;
 
 const initialState: AppState = {
   tasks: [],
+  activeCategory: null,
+  showFilterModal: false,
   addTask: () => {},
   toggleTask: () => {},
   deleteTask: () => {},
   updateTask: () => {},
+  getCategories: () => [],
+  toggleFilterModal: () => {},
+  setActiveCategory: () => {},
 };
 
 const reducer = (state: AppState, action: ACTION_TYPE): AppState => {
@@ -82,6 +95,10 @@ const reducer = (state: AppState, action: ACTION_TYPE): AppState => {
           return task;
         }),
       };
+    case 'SET_ACTIVE_CATEGORY':
+      return {...state, activeCategory: action.payload};
+    case 'TOGGLE_FILTER_MODAL':
+      return {...state, showFilterModal: !state.showFilterModal};
     default:
       return state;
   }
@@ -104,7 +121,9 @@ const AppProvider = ({children}: AppProviderProps) => {
     const tasks = await getData('tasks');
 
     if (tasks) {
-      dispatch({type: 'SET_TASKS', payload: JSON.parse(tasks)});
+      const parsedTasks = JSON.parse(tasks);
+
+      dispatch({type: 'SET_TASKS', payload: parsedTasks});
     }
   };
 
@@ -123,9 +142,33 @@ const AppProvider = ({children}: AppProviderProps) => {
   const toggleTask = (taskId: number) =>
     dispatch({type: 'TOGGLE_TASK', payload: taskId});
 
+  const toggleFilterModal = () => dispatch({type: 'TOGGLE_FILTER_MODAL'});
+
+  const setActiveCategory = (category: string | null) =>
+    dispatch({type: 'SET_ACTIVE_CATEGORY', payload: category});
+
+  const getCategories = useCallback((): string[] => {
+    const categories = state.tasks.map((task: Task) => task.category);
+
+    const uniqueCategories = [...new Set(categories)];
+
+    return uniqueCategories;
+  }, [state.tasks]);
+
   return (
     <AppContext.Provider
-      value={{tasks: state.tasks, addTask, updateTask, deleteTask, toggleTask}}>
+      value={{
+        tasks: state.tasks,
+        showFilterModal: state.showFilterModal,
+        activeCategory: state.activeCategory,
+        addTask,
+        updateTask,
+        deleteTask,
+        toggleTask,
+        toggleFilterModal,
+        setActiveCategory,
+        getCategories,
+      }}>
       {children}
     </AppContext.Provider>
   );

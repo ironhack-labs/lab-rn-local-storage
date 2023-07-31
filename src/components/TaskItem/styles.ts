@@ -4,7 +4,7 @@ import {greyColor, lightColor} from '../../theme/global.styles';
 
 export default StyleSheet.create({
   container: {
-    padding: 15,
+    padding: 20,
     backgroundColor: lightColor,
     flexDirection: 'row',
     justifyContent: 'space-between',
