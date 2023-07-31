@@ -2,7 +2,6 @@ export type Task = {
   id: string;
   title: string;
   description: string;
-  category: string;
-  completion: boolean;
-  status: string;
+  category: 'HOME' | 'WORK' | 'LEARNING';
+  status: 'pending' | 'completed';
 };

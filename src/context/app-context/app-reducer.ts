@@ -25,7 +25,8 @@ export type RehydrateAction = {
 
 export type AddTaskAction = {
   type: APP_TYPES.ADD_TASK;
-  payload: {task: Omit<Task, 'id' | 'completion' | 'status'>};
+  payload: {task: Omit<Task, 'id' | 'status'>};
+};
 };
 
 export type UpdateTaskAction = {
@@ -39,7 +40,6 @@ export const appReducer = (
   state: AppState,
   action: AppTypeActions,
 ): AppState => {
-  console.log('action', action);
   switch (action.type) {
     case APP_TYPES.REHYDRATE:
       return {
@@ -51,7 +51,6 @@ export const appReducer = (
         ...state,
         tasks: [...state.tasks].concat({
           id: uuidv4(),
-          completion: false,
           status: 'pending',
           ...action.payload.task,
         }),

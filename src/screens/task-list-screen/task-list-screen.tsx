@@ -22,7 +22,7 @@ export const TaskListScreen = ({navigation}: TaskListScreenProps) => {
               <Icon
                 {...props}
                 name={
-                  task.completion
+                  task.status === 'completed'
                     ? 'checkmark-square-2-outline'
                     : 'square-outline'
                 }
