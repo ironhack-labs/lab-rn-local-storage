@@ -1,5 +1,5 @@
 import {Alert, AlertButton, Text, View} from 'react-native';
-import {ReadonlyInput} from '../components';
+import {GoBackButton, ReadonlyInput} from '../components';
 import {TaskDetailScreenProps} from '../navigation/TaskStackNavigator';
 import {taskFormStyles} from '../theme/TaskForm.styles';
 import {useTasksContext} from '../hooks';
@@ -41,6 +41,7 @@ const TaskDetailScreen = ({route, navigation}: TaskDetailScreenProps) => {
 
   return (
     <View style={taskFormStyles.container}>
+      <GoBackButton />
       <Text style={taskFormStyles.title}>Task {task.id} detail</Text>
       <ReadonlyInput value={task.title} />
       <ReadonlyInput value={task.description} />

@@ -1,4 +1,4 @@
-import {FormInput} from '../components';
+import {FormInput, GoBackButton} from '../components';
 import {Task} from '../types';
 import {useAppNavigation, useTasksContext} from '../hooks';
 import {useForm} from 'react-hook-form';
@@ -25,6 +25,7 @@ const TaskCreationScreen = () => {
 
   return (
     <View style={taskFormStyles.container}>
+      <GoBackButton />
       <Text style={taskFormStyles.title}>Create new task</Text>
       <FormInput<Task>
         control={control}

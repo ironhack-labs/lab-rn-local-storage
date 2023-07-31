@@ -17,4 +17,12 @@ export const appStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
+  goBackButton: {
+    borderRadius: 1000,
+    backgroundColor: '#03DAC590',
+    height: 35,
+    width: 35,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
