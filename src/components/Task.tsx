@@ -7,7 +7,12 @@ import {NavListBase} from '../navigation/NavListBase';
 const Task: React.FC<TTask> = ({title, description, category, status}) => {
   const {navigate} = useNavigation<NavigationProp<NavListBase>>();
 
-  const [data, setData] = useState({});
+  const [data, setData] = useState<TTask>({
+    title: '',
+    description: '',
+    category: '',
+    status: false,
+  });
 
   useEffect(() => {
     setData({

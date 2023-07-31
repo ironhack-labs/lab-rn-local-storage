@@ -1,11 +1,18 @@
 import * as React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import GoBackBtn from '../components/GoBackBtn';
-import {Task as TTask} from '../types/types';
 import MyButton from '../components/MyButton';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+import {NavListBase} from '../navigation/NavListBase';
 
-const TaskDetails = props => {
-  const {title, description, category, status} = props.route.params;
+type DetailsScreenProps = {
+  navigation: StackNavigationProp<NavListBase, 'TaskDetails'>;
+  route: RouteProp<NavListBase, 'TaskDetails'>;
+};
+
+const TaskDetails: React.FC<DetailsScreenProps> = ({route}) => {
+  const {title, description, category, status} = route.params;
 
   return (
     <View>
@@ -17,7 +24,7 @@ const TaskDetails = props => {
         <Text style={styles.text}>{category}</Text>
         <Text style={styles.text}>{status}</Text>
         <View style={styles.options}>
-            <MyButton title="Delete task" onPress={() => {}} />
+          <MyButton title="Delete task" onPress={() => {}} />
         </View>
       </View>
     </View>
