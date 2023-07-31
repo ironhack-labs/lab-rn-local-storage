@@ -1,4 +1,5 @@
 import {TextInputProps} from 'react-native';
+import {StyleProp, TextInputProps, ViewStyle} from 'react-native';
 
 export type Categories = string[];
 
@@ -67,3 +68,10 @@ export type ReadonlyInputProps = {
 };
 
 export type TaskListItemProps = {task: Task};
+
+export type ButtonProps = {
+  color: string;
+  title: string;
+  styles?: StyleProp<ViewStyle>;
+  onPress: () => void;
+};

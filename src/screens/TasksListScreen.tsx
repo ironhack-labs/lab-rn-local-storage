@@ -1,7 +1,6 @@
-import {CategoryFilter, TaskListItem} from '../components';
+import {Button, CategoryFilter, TaskListItem} from '../components';
 import {useAppNavigation, useTasksContext} from '../hooks';
 import {View, FlatList, Text} from 'react-native';
-import Button from '../components/Button';
 import React from 'react';
 import {taskListStyles} from '../theme/TaskList.styles';
 

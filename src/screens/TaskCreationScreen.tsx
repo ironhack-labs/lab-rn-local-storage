@@ -1,10 +1,9 @@
-import {FormInput, GoBackButton} from '../components';
+import {FormInput, GoBackButton, Button} from '../components';
 import {Task} from '../types';
 import {useAppNavigation, useTasksContext} from '../hooks';
 import {useForm} from 'react-hook-form';
 import {View, Text} from 'react-native';
 import React from 'react';
-import Button from '../components/Button';
 import {taskFormStyles} from '../theme/TaskForm.styles';
 
 const TaskCreationScreen = () => {

@@ -1,9 +1,8 @@
 import {Alert, AlertButton, Text, View} from 'react-native';
-import {GoBackButton, ReadonlyInput} from '../components';
+import {Button, GoBackButton, ReadonlyInput} from '../components';
 import {TaskDetailScreenProps} from '../navigation/TaskStackNavigator';
 import {taskFormStyles} from '../theme/TaskForm.styles';
 import {useTasksContext} from '../hooks';
-import Button from '../components/Button';
 import React, {useMemo} from 'react';
 
 const TaskDetailScreen = ({route, navigation}: TaskDetailScreenProps) => {
