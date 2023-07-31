@@ -13,6 +13,7 @@ const TaskCreation = () => {
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo aperiam minus placeat ea doloribus sequi. Explicabo debitis, corrupti consectetur repudiandae rerum labore dolorem, tenetur odio dolor neque accusantium molestias distinctio?',
       category: 'doloribus',
       status: false,
+      id: Date.now(),
     };
     addTask(demoTask);
   };
@@ -20,7 +21,7 @@ const TaskCreation = () => {
   return (
     <View>
       <Text>TaskCreation</Text>
-      <MyButton title="Submit" onPress={addNewTask}/>
+      <MyButton title="Submit" onPress={addNewTask} />
     </View>
   );
 };

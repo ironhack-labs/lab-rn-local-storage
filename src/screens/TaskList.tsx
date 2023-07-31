@@ -15,6 +15,7 @@ const TaskList = () => {
           description={task.description}
           category={task.category}
           status={task.status}
+          id={task.id}
         />
       ))}
     </View>

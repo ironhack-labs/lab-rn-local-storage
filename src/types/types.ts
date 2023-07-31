@@ -3,6 +3,7 @@ export type Task = {
   description: string;
   category: string;
   status: boolean;
+  id: number;
 };
 
 export type Tasks = Task[];
