@@ -1,11 +1,8 @@
-import {View, Text} from 'react-native';
-import React, {FC} from 'react';
-import type {TaskCreationScreenProps} from '../../navigation/app-navigator.types';
+import React from 'react';
 
-export const TaskCreationScreen: FC<TaskCreationScreenProps> = () => {
-  return (
-    <View>
-      <Text>TaskCreation</Text>
-    </View>
-  );
-};
+import type {TaskCreationScreenProps} from '../../navigation/app-navigator.types';
+import {AddTaskForm} from '../../components';
+
+export const TaskCreationScreen = ({navigation}: TaskCreationScreenProps) => (
+  <AddTaskForm onSuccess={() => navigation.navigate('TaskList')} />
+);

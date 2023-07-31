@@ -1,9 +1,11 @@
+import React from 'react';
 import {View, Text} from 'react-native';
-import React, {FC} from 'react';
+import {Button} from '@ui-kitten/components';
+
 import type {TaskListScreenProps} from '../../navigation/app-navigator.types';
 import {useAppCtx} from '../../context';
 
-export const TaskListScreen: FC<TaskListScreenProps> = () => {
+export const TaskListScreen = ({navigation}: TaskListScreenProps) => {
   const {tasks} = useAppCtx();
 
   return (
@@ -11,6 +13,10 @@ export const TaskListScreen: FC<TaskListScreenProps> = () => {
       {tasks.map(({id, title}) => (
         <Text key={id}>{title}</Text>
       ))}
+
+      <Button onPress={() => navigation.navigate('TaskCreation')}>
+        Add Task
+      </Button>
     </View>
   );
 };
