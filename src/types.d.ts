@@ -21,6 +21,7 @@ export type TasksContextState = {
   addTask: (task: Task) => void;
   updateTaskStatus: (taskId: number) => void;
   removeTask: (taskId: number) => void;
+  setTasks: () => void;
 };
 
 export type TasksReducerState = {
@@ -28,6 +29,10 @@ export type TasksReducerState = {
 };
 
 export type TasksReducerAction =
+  | {
+      type: 'setTasks';
+      payload: {tasks: Task[]};
+    }
   | {
       type: 'addTask';
       payload: {task: Task};

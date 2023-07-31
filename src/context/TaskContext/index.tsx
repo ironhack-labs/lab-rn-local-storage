@@ -7,6 +7,7 @@ const INITIAL_CTX_VALUE: TasksContextState = {
   addTask: () => {},
   updateTaskStatus: () => {},
   removeTask: () => {},
+  setTasks: () => {},
 };
 
 const TasksContext = createContext<TasksContextState>(INITIAL_CTX_VALUE);

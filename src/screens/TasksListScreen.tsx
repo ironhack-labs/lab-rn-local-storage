@@ -1,12 +1,17 @@
 import {View, Text, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useAppNavigation, useTasksContext} from '../hooks';
 import {AddTaskButton} from '../components';
 import {Task} from '../types';
 
 const TasksListScreen = () => {
-  const {tasks} = useTasksContext();
+  const {tasks, setTasks} = useTasksContext();
   const {navigate} = useAppNavigation();
+
+  useEffect(() => {
+    setTasks();
+  }, [setTasks]);
+
   const onDetailPress = (task: Task) => {
     navigate('TaskDetails', {task});
   };
