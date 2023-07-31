@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useReducer} from 'react';
 import {TasksContext} from '.';
 import {initialTasksReducerValue, tasksReducer} from './taskReducer';
@@ -14,14 +14,20 @@ export const TasksContextProvider = ({...props}) => {
     initialTasksReducerValue,
   );
 
+  useEffect(() => {
+    setTasks();
+  }, []);
+
+  useEffect(() => {
+    setLocalStorageItem('tasks', [...tasks]);
+  }, [tasks]);
+
   const setTasks = async () => {
     try {
       const localTasks = await getLocalStorageItem<Task[]>('tasks');
       dispatch({
         type: 'setTasks',
-        payload: {
-          tasks: localTasks,
-        },
+        payload: {tasks: localTasks},
       });
     } catch (error) {
       console.error(error);
@@ -33,8 +39,6 @@ export const TasksContextProvider = ({...props}) => {
       type: 'addTask',
       payload: {task},
     });
-
-    await setLocalStorageItem('tasks', [...tasks, task]);
   };
 
   const updateTaskStatus = async (taskId: number) => {
@@ -42,7 +46,6 @@ export const TasksContextProvider = ({...props}) => {
       type: 'updateTaskStatus',
       payload: {taskId},
     });
-    await setLocalStorageItem('tasks', [...tasks]);
   };
 
   const removeTask = async (taskId: number) => {
@@ -50,11 +53,6 @@ export const TasksContextProvider = ({...props}) => {
       type: 'removeTask',
       payload: {taskId},
     });
-
-    await setLocalStorageItem(
-      'tasks',
-      tasks.filter(({id}) => id !== taskId),
-    );
   };
 
   const ctxValue: TasksContextState = {
@@ -62,7 +60,6 @@ export const TasksContextProvider = ({...props}) => {
     addTask,
     removeTask,
     updateTaskStatus,
-    setTasks,
   };
 
   return <TasksContext.Provider {...props} value={ctxValue} />;

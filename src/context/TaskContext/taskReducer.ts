@@ -20,7 +20,6 @@ const tasksReducer = (
     case 'updateTaskStatus': {
       const {taskId} = action.payload;
       const taskIndex = state.tasks.findIndex(x => x.id === taskId);
-
       if (taskIndex > -1) {
         state.tasks[taskIndex].isCompleted =
           !state.tasks[taskIndex].isCompleted;

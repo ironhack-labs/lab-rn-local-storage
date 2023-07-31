@@ -15,7 +15,7 @@ const TaskCreationScreen = () => {
 
   const handleAddTask = (task: Task) => {
     try {
-      const newTask: Task = {...task, id: tasks.length + 1};
+      const newTask: Task = {...task, id: tasks.length + 1, isCompleted: false};
       addTask(newTask);
       goBack();
     } catch (error) {
