@@ -1,5 +1,5 @@
 import type {Task} from '../../types';
-import {v4 as uuidv4} from 'uuid';
+import UUIDGenerator from 'react-native-uuid';
 
 // NOTE: temporal mock
 import {TASKS_DATA} from '../../__mocks__';
@@ -68,7 +68,7 @@ export const appReducer = (
       return {
         ...state,
         tasks: [...state.tasks].concat({
-          id: uuidv4(),
+          id: UUIDGenerator.v4().toString(),
           status: 'pending',
           ...action.payload.task,
         }),
