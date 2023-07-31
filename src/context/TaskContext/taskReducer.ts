@@ -2,6 +2,7 @@ import {TasksReducerAction, TasksReducerState} from '../../types';
 
 const initialTasksReducerValue: TasksReducerState = {
   tasks: [],
+  category: '',
 };
 
 const tasksReducer = (
@@ -9,6 +10,8 @@ const tasksReducer = (
   action: TasksReducerAction,
 ): TasksReducerState => {
   switch (action.type) {
+    case 'setCategoryFilter':
+      return {...state, category: action.payload.category};
     case 'setTasks':
       return {...state, tasks: [...action.payload.tasks]};
     case 'addTask':

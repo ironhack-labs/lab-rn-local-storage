@@ -18,13 +18,16 @@ export type TaskStackParamList = {
 
 export type TasksContextState = {
   tasks: Task[];
+  category: string;
   addTask: (task: Task) => void;
   updateTaskStatus: (taskId: number) => void;
   removeTask: (taskId: number) => void;
+  setCategoryFilter: (category: string) => void;
 };
 
 export type TasksReducerState = {
   tasks: Task[];
+  category: string;
 };
 
 export type TasksReducerAction =
@@ -43,6 +46,10 @@ export type TasksReducerAction =
   | {
       type: 'removeTask';
       payload: {taskId: number};
+    }
+  | {
+      type: 'setCategoryFilter';
+      payload: {category: string};
     };
 
 export type FormInputProps<T extends object> = {

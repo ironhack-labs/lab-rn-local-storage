@@ -9,7 +9,7 @@ import {
 } from '../../services/localStorage';
 
 export const TasksContextProvider = ({...props}) => {
-  const [{tasks}, dispatch] = useReducer(
+  const [{tasks, category}, dispatch] = useReducer(
     tasksReducer,
     initialTasksReducerValue,
   );
@@ -37,29 +37,46 @@ export const TasksContextProvider = ({...props}) => {
   const addTask = async (task: Task) => {
     dispatch({
       type: 'addTask',
-      payload: {task},
+      payload: {
+        task,
+      },
     });
   };
 
   const updateTaskStatus = async (taskId: number) => {
     dispatch({
       type: 'updateTaskStatus',
-      payload: {taskId},
+      payload: {
+        taskId,
+      },
     });
   };
 
   const removeTask = async (taskId: number) => {
     dispatch({
       type: 'removeTask',
-      payload: {taskId},
+      payload: {
+        taskId,
+      },
+    });
+  };
+
+  const setCategoryFilter = (categoryFilter: string) => {
+    dispatch({
+      type: 'setCategoryFilter',
+      payload: {
+        category: categoryFilter,
+      },
     });
   };
 
   const ctxValue: TasksContextState = {
     tasks,
+    category,
     addTask,
     removeTask,
     updateTaskStatus,
+    setCategoryFilter,
   };
 
   return <TasksContext.Provider {...props} value={ctxValue} />;

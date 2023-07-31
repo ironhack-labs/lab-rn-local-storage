@@ -4,10 +4,11 @@ import {TasksContextProvider} from './TaskContextProvider';
 
 const INITIAL_CTX_VALUE: TasksContextState = {
   tasks: [],
+  category: '',
   addTask: () => {},
   updateTaskStatus: () => {},
   removeTask: () => {},
-  setTasks: () => {},
+  setCategoryFilter: () => {},
 };
 
 const TasksContext = createContext<TasksContextState>(INITIAL_CTX_VALUE);
