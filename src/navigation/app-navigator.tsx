@@ -8,12 +8,20 @@ import {
 } from '../screens';
 import type {RootStackParamList} from './app-navigator.types';
 
+import {TaskFilterButton} from '../components/task-filter-button';
+
 const Stack = createStackNavigator<RootStackParamList>();
 
 export const AppNavigator = () => (
   <NavigationContainer>
     <Stack.Navigator initialRouteName="TaskList">
-      <Stack.Screen name="TaskList" component={TaskListScreen} />
+      <Stack.Screen
+        name="TaskList"
+        options={{
+          headerRight: TaskFilterButton,
+        }}
+        component={TaskListScreen}
+      />
       <Stack.Screen name="TaskDetails" component={TaskDetailsScreen} />
       <Stack.Screen name="TaskCreation" component={TaskCreationScreen} />
     </Stack.Navigator>

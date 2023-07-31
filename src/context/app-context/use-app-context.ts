@@ -8,6 +8,7 @@ import {
   CompleteTaskAction,
   DeleteTaskAction,
   AddTaskAction,
+  ToggleTaskAction,
 } from './app-reducer';
 
 type AppContextActions = {
@@ -15,6 +16,7 @@ type AppContextActions = {
   addTask: (task: AddTaskAction['payload']['task']) => void;
   deleteTask: (task: DeleteTaskAction['payload']['id']) => void;
   completeTask: (task: CompleteTaskAction['payload']['id']) => void;
+  toggleFilter: (filter: ToggleTaskAction['payload']['filter']) => void;
 };
 
 export type AppContext = AppState & AppContextActions;
@@ -25,6 +27,7 @@ export const initialContextValue: AppContext = {
   addTask: () => null,
   deleteTask: () => null,
   completeTask: () => null,
+  toggleFilter: () => null,
 };
 
 export const useContextApp = () => {
@@ -42,6 +45,12 @@ export const useContextApp = () => {
     },
     completeTask: taskId => {
       dispatch({type: APP_TYPES.COMPLETE_TASK, payload: {id: taskId}});
+    },
+    toggleFilter: category => {
+      dispatch({
+        type: APP_TYPES.TOGGLE_TASK_FILTER,
+        payload: {filter: category},
+      });
     },
   };
 

@@ -6,10 +6,12 @@ import {TASKS_DATA} from '../../__mocks__';
 
 export type AppState = {
   tasks: Task[];
+  filters: Task['category'][];
 };
 
 export const initialAppState: AppState = {
   tasks: TASKS_DATA,
+  filters: [],
 };
 
 export enum APP_TYPES {
@@ -17,6 +19,7 @@ export enum APP_TYPES {
   ADD_TASK = 'ADD_TASK',
   DELETE_TASK = 'DELETE_TASK',
   COMPLETE_TASK = 'COMPLETE_TASK',
+  TOGGLE_TASK_FILTER = 'TOGGLE_TASK_FILTER',
 }
 
 export type RehydrateAction = {
@@ -39,11 +42,17 @@ export type CompleteTaskAction = {
   payload: {id: Task['id']};
 };
 
+export type ToggleTaskAction = {
+  type: APP_TYPES.TOGGLE_TASK_FILTER;
+  payload: {filter: Task['category']};
+};
+
 type AppTypeActions =
   | RehydrateAction
   | AddTaskAction
   | DeleteTaskAction
-  | CompleteTaskAction;
+  | CompleteTaskAction
+  | ToggleTaskAction;
 
 export const appReducer = (
   state: AppState,
@@ -82,6 +91,13 @@ export const appReducer = (
 
           return task;
         }),
+      };
+    case APP_TYPES.TOGGLE_TASK_FILTER:
+      return {
+        ...state,
+        filters: state.filters.includes(action.payload.filter)
+          ? state.filters.filter(filter => filter !== action.payload.filter)
+          : [...state.filters].concat(action.payload.filter),
       };
     default:
       return state;
