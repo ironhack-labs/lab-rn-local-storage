@@ -1,4 +1,5 @@
-import React, { createContext, useReducer, useContext, Dispatch } from 'react';
+import React, { createContext, useReducer, useContext, Dispatch, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Task } from '../types/Task';
 
 interface TasksState {
@@ -14,8 +15,11 @@ type Action =
   | { type: 'ADD_CATEGORY'; payload: string }
   | { type: 'SELECT_CATEGORY'; payload: string }
   | { type: 'TOGGLE_TASK'; payload: number }
+  | { type: 'LOAD_TASKS'; payload: Task[] };
 
 type TasksDispatch = Dispatch<Action>;
+
+const TASKS_STORAGE_KEY = '@tasks';
 
 const TasksContext = createContext<{ state: TasksState; dispatch: TasksDispatch }>({
   state: { tasks: [], categories: [], selectedCategory: null },
@@ -48,13 +52,18 @@ const tasksReducer = (state: TasksState, action: Action): TasksState => {
         ...state,
         selectedCategory: action.payload,
       };
-      case 'TOGGLE_TASK':
-        return {
-          ...state,
-          tasks: state.tasks.map((task) =>
-            task.id === action.payload ? { ...task, completed: !task.completed } : task
-          ),
-        };
+    case 'TOGGLE_TASK':
+      return {
+        ...state,
+        tasks: state.tasks.map((task) =>
+          task.id === action.payload ? { ...task, completed: !task.completed } : task
+        ),
+      };
+    case 'LOAD_TASKS':
+      return {
+        ...state,
+        tasks: action.payload,
+      };
     default:
       return state;
   }
@@ -62,6 +71,32 @@ const tasksReducer = (state: TasksState, action: Action): TasksState => {
 
 const TasksProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(tasksReducer, { tasks: [], categories: [], selectedCategory: null });
+
+  useEffect(() => {
+    const loadTasks = async () => {
+      try {
+        const storedTasks = await AsyncStorage.getItem(TASKS_STORAGE_KEY);
+        if (storedTasks) {
+          const tasksFromStorage = JSON.parse(storedTasks);
+          dispatch({ type: 'LOAD_TASKS', payload: tasksFromStorage });
+        }
+      } catch (error) {
+        console.log('Error loading tasks from storage:', error);
+      }
+    };
+    loadTasks();
+  }, []);
+
+  useEffect(() => {
+    const saveTasks = async () => {
+      try {
+        await AsyncStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(state.tasks));
+      } catch (error) {
+        console.log('Error saving tasks to storage:', error);
+      }
+    };
+    saveTasks();
+  }, [state.tasks]);
 
   return (
     <TasksContext.Provider value={{ state, dispatch }}>{children}</TasksContext.Provider>
