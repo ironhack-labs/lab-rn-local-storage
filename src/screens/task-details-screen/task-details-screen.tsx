@@ -1,11 +1,10 @@
-import {View, Text} from 'react-native';
-import React, {FC} from 'react';
-import type {TaskDetailsScreenProps} from '../../navigation/app-navigator.types';
+import React from 'react';
 
-export const TaskDetailsScreen: FC<TaskDetailsScreenProps> = () => {
-  return (
-    <View>
-      <Text>TaskDetails</Text>
-    </View>
-  );
-};
+import type {TaskDetailsScreenProps} from '../../navigation/app-navigator.types';
+import {TaskDetail} from '../../components';
+
+export const TaskDetailsScreen = ({
+  route: {
+    params: {task},
+  },
+}: TaskDetailsScreenProps) => <TaskDetail {...task} />;

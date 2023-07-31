@@ -5,14 +5,16 @@ import {
   appReducer,
   initialAppState,
   APP_TYPES,
-  UpdateTaskAction,
+  CompleteTaskAction,
+  DeleteTaskAction,
   AddTaskAction,
 } from './app-reducer';
 
 type AppContextActions = {
   setSession: (appStsate: AppState) => void;
   addTask: (task: AddTaskAction['payload']['task']) => void;
-  updateTask: (task: UpdateTaskAction['payload']['task']) => void;
+  deleteTask: (task: DeleteTaskAction['payload']['id']) => void;
+  completeTask: (task: CompleteTaskAction['payload']['id']) => void;
 };
 
 export type AppContext = AppState & AppContextActions;
@@ -21,7 +23,8 @@ export const initialContextValue: AppContext = {
   ...initialAppState,
   setSession: () => null,
   addTask: () => null,
-  updateTask: () => null,
+  deleteTask: () => null,
+  completeTask: () => null,
 };
 
 export const useContextApp = () => {
@@ -34,8 +37,11 @@ export const useContextApp = () => {
     addTask: task => {
       dispatch({type: APP_TYPES.ADD_TASK, payload: {task}});
     },
-    updateTask: task => {
-      dispatch({type: APP_TYPES.UPDATE_TASK, payload: {task}});
+    deleteTask: taskId => {
+      dispatch({type: APP_TYPES.DELETE_TASK, payload: {id: taskId}});
+    },
+    completeTask: taskId => {
+      dispatch({type: APP_TYPES.COMPLETE_TASK, payload: {id: taskId}});
     },
   };
 

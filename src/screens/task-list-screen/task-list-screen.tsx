@@ -15,6 +15,7 @@ export const TaskListScreen = ({navigation}: TaskListScreenProps) => {
         ItemSeparatorComponent={Divider}
         renderItem={({item: task}) => (
           <ListItem
+            onPress={() => navigation.navigate('TaskDetails', {task})}
             title={task.title}
             description={task.description}
             // eslint-disable-next-line react/no-unstable-nested-components

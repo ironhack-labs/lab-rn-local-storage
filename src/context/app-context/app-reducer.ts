@@ -15,7 +15,8 @@ export const initialAppState: AppState = {
 export enum APP_TYPES {
   REHYDRATE = 'REHYDRATE',
   ADD_TASK = 'ADD_TASK',
-  UPDATE_TASK = 'UPDATE_TASK',
+  DELETE_TASK = 'DELETE_TASK',
+  COMPLETE_TASK = 'COMPLETE_TASK',
 }
 
 export type RehydrateAction = {
@@ -27,14 +28,22 @@ export type AddTaskAction = {
   type: APP_TYPES.ADD_TASK;
   payload: {task: Omit<Task, 'id' | 'status'>};
 };
+
+export type DeleteTaskAction = {
+  type: APP_TYPES.DELETE_TASK;
+  payload: {id: Task['id']};
 };
 
-export type UpdateTaskAction = {
-  type: APP_TYPES.UPDATE_TASK;
-  payload: {task: Partial<Task>};
+export type CompleteTaskAction = {
+  type: APP_TYPES.COMPLETE_TASK;
+  payload: {id: Task['id']};
 };
 
-type AppTypeActions = RehydrateAction | AddTaskAction | UpdateTaskAction;
+type AppTypeActions =
+  | RehydrateAction
+  | AddTaskAction
+  | DeleteTaskAction
+  | CompleteTaskAction;
 
 export const appReducer = (
   state: AppState,
@@ -55,14 +64,19 @@ export const appReducer = (
           ...action.payload.task,
         }),
       };
-    case APP_TYPES.UPDATE_TASK:
+    case APP_TYPES.DELETE_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.filter(({id}) => id !== action.payload.id),
+      };
+    case APP_TYPES.COMPLETE_TASK:
       return {
         ...state,
         tasks: state.tasks.map(task => {
-          if (task.id === action.payload.task.id) {
+          if (task.id === action.payload.id) {
             return {
               ...task,
-              ...action.payload.task,
+              status: 'completed',
             };
           }
 
