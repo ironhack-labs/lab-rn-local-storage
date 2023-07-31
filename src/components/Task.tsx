@@ -1,10 +1,22 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {Task as TTask} from '../types/types';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {NavListBase} from '../navigation/NavListBase';
 
 const Task: React.FC<TTask> = ({title, description, category, status}) => {
-  const {navigate} = useNavigation();
+  const {navigate} = useNavigation<NavigationProp<NavListBase>>();
+
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    setData({
+      title,
+      description,
+      category,
+      status,
+    });
+  }, [category, description, status, title]);
 
   const shortText = (text: string, maxLength: number) => {
     if (text.length > maxLength) {
@@ -15,7 +27,11 @@ const Task: React.FC<TTask> = ({title, description, category, status}) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity activeOpacity={0.5} onPress={() => navigate('TaskDetails')}>
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={() => {
+          return navigate('TaskDetails', data);
+        }}>
         <Text style={styles.text}>{title}</Text>
         <Text style={styles.text}>{shortText(description, 50)}</Text>
         <Text style={styles.text}>{category}</Text>
