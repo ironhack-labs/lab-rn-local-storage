@@ -17,6 +17,9 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  titleCompleted: {
+    textDecorationLine: 'line-through',
+  },
   categoryContainer: {
     paddingVertical: 5,
     paddingHorizontal: 10,

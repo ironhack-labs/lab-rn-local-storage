@@ -55,19 +55,22 @@ const TaskCreation = ({navigation}: TaskCreationProps) => {
     <SafeAreaView style={styles.container}>
       <GoBack text="Volver a Mis tareas" />
       <View style={styles.container}>
+        <Text style={styles.label}>Título</Text>
         <TextInput
           style={styles.input}
           autoCorrect={false}
           placeholder="Título"
           onChangeText={text => handleFormValuesChange('title', text)}
         />
+        <Text style={styles.label}>Descripción</Text>
         <TextInput
-          style={styles.input}
+          style={styles.inputMultiline}
           autoCorrect={false}
           placeholder="Descripción"
           onChangeText={text => handleFormValuesChange('description', text)}
           multiline
         />
+        <Text style={styles.label}>Categoría</Text>
         <TextInput
           style={styles.input}
           autoCapitalize="none"

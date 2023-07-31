@@ -28,6 +28,7 @@ const AppNavigator = () => {
           options={{
             title: 'Nueva tarea',
             headerBackVisible: false,
+            headerShadowVisible: false,
           }}
         />
         <Stack.Screen
@@ -36,6 +37,7 @@ const AppNavigator = () => {
           options={{
             title: 'Detalles de la tarea',
             headerBackVisible: false,
+            headerShadowVisible: false,
           }}
         />
       </Stack.Navigator>

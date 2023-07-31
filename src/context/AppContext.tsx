@@ -1,7 +1,6 @@
 import React, {
   PropsWithChildren,
   createContext,
-  useCallback,
   useEffect,
   useReducer,
 } from 'react';
@@ -30,19 +29,26 @@ import {getData, saveData} from '../helpers/storage';
 type AppState = {
   tasks: Task[];
   addTask: (newTask: NewTask) => void;
+  updateTask: (updatedTask: Task) => void;
+  deleteTask: (id: number) => void;
+  toggleTask: (id: number) => void;
 };
 
 type ACTION_TYPE =
   | {type: 'SET_TASKS'; payload: Task[]}
   | {type: 'ADD_TASK'; payload: Task}
   | {type: 'UPDATE_TASK'; payload: Task}
-  | {type: 'DELETE_TASK'; payload: number};
+  | {type: 'DELETE_TASK'; payload: number}
+  | {type: 'TOGGLE_TASK'; payload: number};
 
 type AppProviderProps = PropsWithChildren<{}>;
 
 const initialState: AppState = {
   tasks: [],
   addTask: () => {},
+  toggleTask: () => {},
+  deleteTask: () => {},
+  updateTask: () => {},
 };
 
 const reducer = (state: AppState, action: ACTION_TYPE): AppState => {
@@ -51,6 +57,31 @@ const reducer = (state: AppState, action: ACTION_TYPE): AppState => {
       return {...state, tasks: action.payload};
     case 'ADD_TASK':
       return {...state, tasks: [...state.tasks, action.payload]};
+    case 'UPDATE_TASK':
+      return {
+        ...state,
+        tasks: state.tasks.map(task => {
+          if (task.id === action.payload.id) {
+            return action.payload;
+          }
+          return task;
+        }),
+      };
+    case 'DELETE_TASK':
+      return {
+        ...state,
+        tasks: state.tasks.filter(task => task.id !== action.payload),
+      };
+    case 'TOGGLE_TASK':
+      return {
+        ...state,
+        tasks: state.tasks.map(task => {
+          if (task.id === action.payload) {
+            return {...task, completed: !task.completed};
+          }
+          return task;
+        }),
+      };
     default:
       return state;
   }
@@ -77,15 +108,24 @@ const AppProvider = ({children}: AppProviderProps) => {
     }
   };
 
-  const addTask = (newTask: NewTask) => {
+  const addTask = (newTask: NewTask) =>
     dispatch({
       type: 'ADD_TASK',
       payload: {...newTask, id: state.tasks.length + 1},
     });
-  };
+
+  const updateTask = (updatedTask: Task) =>
+    dispatch({type: 'UPDATE_TASK', payload: updatedTask});
+
+  const deleteTask = (taskId: number) =>
+    dispatch({type: 'DELETE_TASK', payload: taskId});
+
+  const toggleTask = (taskId: number) =>
+    dispatch({type: 'TOGGLE_TASK', payload: taskId});
 
   return (
-    <AppContext.Provider value={{tasks: state.tasks, addTask}}>
+    <AppContext.Provider
+      value={{tasks: state.tasks, addTask, updateTask, deleteTask, toggleTask}}>
       {children}
     </AppContext.Provider>
   );

@@ -6,19 +6,28 @@ export default StyleSheet.create({
   container: {
     ...globalStyles.container,
   },
-  label: {
-    ...globalStyles.label,
-  },
   input: {
     ...globalStyles.input,
   },
   inputMultiline: {
     ...globalStyles.inputMultiline,
   },
+  checkboxContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  label: {
+    ...globalStyles.label,
+  },
   button: {
     ...globalStyles.button,
   },
   textButton: {
     ...globalStyles.textButton,
+  },
+  textDeleteButton: {
+    ...globalStyles.textDeleteButton,
   },
 });
