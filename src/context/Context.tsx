@@ -12,7 +12,15 @@ const initialState: AppState = {
 const AppContext = createContext<AppState>(initialState);
 
 const AppReducer = (state: AppState, action: Action): AppState => {
-  console.log(state, action);
+  switch (action.type) {
+    case 'ADD_TASK':
+      return {
+        ...state,
+        tasks: [...state.tasks, action.payload],
+      };
+    default:
+      break;
+  }
   return state;
 };
 
