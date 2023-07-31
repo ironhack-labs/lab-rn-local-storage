@@ -9,3 +9,10 @@ export type Task = {
 };
 
 export type TaskList = Task[];
+
+export type FormData = {
+  title: string;
+  description: string;
+  category: CATEGORY;
+  completed: boolean;
+};

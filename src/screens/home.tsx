@@ -1,10 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, ListRenderItem } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Button,
+  ListRenderItem,
+} from 'react-native';
 import { HomeProps } from '../navigation/types';
 import { Task } from '../types';
 import { useTaskList } from '../context';
 
-export default function HomeScreen({ route, navigation }: HomeProps) {
+export default function HomeScreen({ navigation }: HomeProps) {
   const { taskList } = useTaskList();
   const renderItem: ListRenderItem<Task> = ({ item }) => {
     return (
@@ -19,6 +26,10 @@ export default function HomeScreen({ route, navigation }: HomeProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Home Screen</Text>
+      <Button
+        title="Create New"
+        onPress={() => navigation.navigate('TaskCreation')}
+      />
       <FlatList
         data={taskList}
         keyExtractor={task => task.id}
