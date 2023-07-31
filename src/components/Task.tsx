@@ -15,7 +15,7 @@ const Task: React.FC<TTask> = ({title, description, category, status}) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity activeOpacity={0.5} onPress={() => {}}>
+      <TouchableOpacity activeOpacity={0.5} onPress={() => navigate('TaskDetails')}>
         <Text style={styles.text}>{title}</Text>
         <Text style={styles.text}>{shortText(description, 50)}</Text>
         <Text style={styles.text}>{category}</Text>
