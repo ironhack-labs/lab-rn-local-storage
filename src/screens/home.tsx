@@ -2,14 +2,16 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList, ListRenderItem } from 'react-native';
 import { HomeProps } from '../navigation/types';
 import { Task } from '../types';
-import TASKS from '../mock-tasks';
+import { useTaskList } from '../context';
 
 export default function HomeScreen({ route, navigation }: HomeProps) {
+  const { taskList } = useTaskList();
   const renderItem: ListRenderItem<Task> = ({ item }) => {
     return (
       <View>
         <Text>{item.id}</Text>
         <Text>{item.title}</Text>
+        <Text>{item.category}</Text>
       </View>
     );
   };
@@ -18,7 +20,7 @@ export default function HomeScreen({ route, navigation }: HomeProps) {
     <View style={styles.container}>
       <Text style={styles.title}>Home Screen</Text>
       <FlatList
-        data={TASKS}
+        data={taskList}
         keyExtractor={task => task.id}
         renderItem={renderItem}
       />

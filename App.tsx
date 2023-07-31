@@ -1,11 +1,14 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import Navigation from './src/navigation';
+import { TaskProvider } from './src/context';
 
 function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <Navigation />
+      <TaskProvider>
+        <Navigation />
+      </TaskProvider>
     </SafeAreaView>
   );
 }
