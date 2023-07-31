@@ -32,10 +32,25 @@ const Task: React.FC<TTask> = ({title, description, category, status}) => {
         onPress={() => {
           return navigate('TaskDetails', data);
         }}>
-        <Text style={styles.text}>{title}</Text>
-        <Text style={styles.text}>{shortText(description, 50)}</Text>
-        <Text style={styles.text}>{category}</Text>
-        <Text style={styles.text}>{status ? 'Completed' : 'Pending'}</Text>
+        <View style={styles.row}>
+          <Text style={styles.label}>Title: </Text>
+          <Text style={styles.text}>{title}</Text>
+        </View>
+
+        <View style={styles.row}>
+          <Text style={styles.label}>Desc: </Text>
+          <Text style={styles.text}>{shortText(description, 50)}</Text>
+        </View>
+
+        <View style={styles.row}>
+          <Text style={styles.label}>Category: </Text>
+          <Text style={styles.text}>{category}</Text>
+        </View>
+
+        <View style={styles.row}>
+          <Text style={styles.label}>Status: </Text>
+          <Text style={styles.text}>{status ? 'Completed' : 'Pending'}</Text>
+        </View>
       </TouchableOpacity>
     </View>
   );
@@ -53,5 +68,12 @@ const styles = StyleSheet.create({
   },
   text: {
     marginBottom: 10,
+    flex: 1,
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  label: {
+    width: 80,
   },
 });
