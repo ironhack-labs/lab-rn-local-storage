@@ -11,9 +11,15 @@ export const initialAppState: AppState = {
 };
 
 export enum APP_TYPES {
+  REHYDRATE = 'REHYDRATE',
   ADD_TASK = 'ADD_TASK',
   UPDATE_TASK = 'UPDATE_TASK',
 }
+
+export type RehydrateAction = {
+  type: APP_TYPES.REHYDRATE;
+  payload: AppState;
+};
 
 export type AddTaskAction = {
   type: APP_TYPES.ADD_TASK;
@@ -25,13 +31,18 @@ export type UpdateTaskAction = {
   payload: {task: Partial<Task>};
 };
 
-type AppTypeActions = AddTaskAction | UpdateTaskAction;
+type AppTypeActions = RehydrateAction | AddTaskAction | UpdateTaskAction;
 
 export const appReducer = (
   state: AppState,
   action: AppTypeActions,
 ): AppState => {
   switch (action.type) {
+    case APP_TYPES.REHYDRATE:
+      return {
+        ...state,
+        ...action.payload,
+      };
     case APP_TYPES.ADD_TASK:
       return {
         ...state,

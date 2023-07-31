@@ -5,13 +5,23 @@ import {
   useContextApp,
   initialContextValue,
 } from './use-app-context';
+import {useSessionStorage} from './use-session-storage';
 
 const appContext = createContext<AppContext>(initialContextValue);
 
 export const AppProvider = ({children}: {children: ReactNode}) => {
   const ctxValue = useContextApp();
+  const {isLoading} = useSessionStorage({
+    callback: appState => {
+      ctxValue.setSession(appState);
+    },
+  });
 
-  return <appContext.Provider value={ctxValue}>{children}</appContext.Provider>;
+  return (
+    <appContext.Provider value={ctxValue}>
+      {isLoading ? null : children}
+    </appContext.Provider>
+  );
 };
 
 export const useAppCtx = () => {
