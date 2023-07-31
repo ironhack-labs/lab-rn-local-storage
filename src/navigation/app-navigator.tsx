@@ -46,6 +46,7 @@ export const AppNavigator = () => (
           tabBarIcon: props => (
             <Icon
               {...props}
+              fill={props.color}
               width={props.size}
               height={props.size}
               name="list-outline"
@@ -59,6 +60,7 @@ export const AppNavigator = () => (
           tabBarIcon: props => (
             <Icon
               {...props}
+              fill={props.color}
               width={props.size}
               height={props.size}
               name="search-outline"
@@ -74,6 +76,7 @@ export const AppNavigator = () => (
           tabBarIcon: props => (
             <Icon
               {...props}
+              fill={props.color}
               width={props.size}
               height={props.size}
               name="plus-square-outline"
