@@ -1,74 +1,64 @@
-import {FormInput} from '../components';
-import {Task} from '../types';
+import {Alert, AlertButton, Text, View} from 'react-native';
+import {ReadonlyInput} from '../components';
 import {TaskDetailScreenProps} from '../navigation/TaskStackNavigator';
-import {useAppNavigation, useTasksContext} from '../hooks';
-import {useForm} from 'react-hook-form';
-import {View, Text, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import {taskFormStyles} from '../theme/TaskForm.styles';
+import {useTasksContext} from '../hooks';
+import Button from '../components/Button';
+import React, {useMemo} from 'react';
 
-const TaskDetailScreen = ({route}: TaskDetailScreenProps) => {
-  const {updateTask} = useTasksContext();
-  const [readonly, setReadonly] = useState(true);
-  const {goBack} = useAppNavigation();
-  const {control, handleSubmit, formState} = useForm<Task>({
-    defaultValues: {
-      ...route.params.task,
-    },
-  });
-  const {errors} = formState;
+const TaskDetailScreen = ({route, navigation}: TaskDetailScreenProps) => {
+  const {updateTaskStatus, removeTask} = useTasksContext();
+  const {task} = route.params;
+  const okAction: AlertButton = useMemo(
+    () => ({
+      text: 'Ok',
+      onPress: () => navigation.navigate('TasksList'),
+    }),
+    [navigation],
+  );
+  const onChangeTaskStatusPress = () => {
+    updateTaskStatus(task.id);
+    Alert.alert('Task status', 'task status was successfully changed!', [
+      okAction,
+    ]);
+  };
 
-  const handleUpdateTask = (task: Task) => {
-    try {
-      updateTask(task);
-      goBack();
-    } catch (error) {
-      console.error(error);
-    }
+  const onRemovePress = () => {
+    Alert.alert('Remove task', 'Are you sure to delete this task?', [
+      {text: 'No'},
+      {
+        text: 'Yes',
+        onPress: () => {
+          removeTask(task.id);
+          navigation.goBack();
+          Alert.alert('Task removed', 'the task is deleted successfully', [
+            okAction,
+          ]);
+        },
+      },
+    ]);
   };
 
   return (
-    <View style={{flex: 1}}>
-      <Text>TaskCreationScreen</Text>
-      <FormInput<Task>
-        control={control}
-        controlName="title"
-        error={errors.title?.message}
-        required
-        inputProps={{placeholder: 'Clean home'}}
-        readonly={readonly}
-      />
-      <FormInput<Task>
-        control={control}
-        controlName="description"
-        error={errors.description?.message}
-        required
-        inputProps={{
-          placeholder:
-            'I need to clean the house so I can receive visitors tonight.',
-        }}
-        readonly={readonly}
-      />
-      {/* TODO: Cambiar a un dropdow */}
-      <FormInput<Task>
-        control={control}
-        controlName="category"
-        error={errors.category?.message}
-        required
-        inputProps={{
-          placeholder: 'Cleanin.',
-        }}
-        readonly={readonly}
-      />
-
-      {readonly ? (
-        <TouchableOpacity onPress={() => setReadonly(false)}>
-          <Text>Click for update task</Text>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity onPress={handleSubmit(handleUpdateTask)}>
-          <Text>Update task</Text>
-        </TouchableOpacity>
-      )}
+    <View style={taskFormStyles.container}>
+      <Text style={taskFormStyles.title}>Task {task.id} detail</Text>
+      <ReadonlyInput value={task.title} />
+      <ReadonlyInput value={task.description} />
+      <ReadonlyInput value={task.category} />
+      <View style={taskFormStyles.actionsRow}>
+        <Button
+          color="#ED2939"
+          onPress={onRemovePress}
+          title="Remove"
+          styles={[taskFormStyles.actionButton, taskFormStyles.removeButton]}
+        />
+        <Button
+          color="#03DAC590"
+          onPress={onChangeTaskStatusPress}
+          styles={taskFormStyles.actionButton}
+          title={task.isCompleted ? 'Mark as incomplete' : 'Mark as complete'}
+        />
+      </View>
     </View>
   );
 };

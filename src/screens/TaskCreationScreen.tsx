@@ -2,12 +2,14 @@ import {FormInput} from '../components';
 import {Task} from '../types';
 import {useAppNavigation, useTasksContext} from '../hooks';
 import {useForm} from 'react-hook-form';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text} from 'react-native';
 import React from 'react';
+import Button from '../components/Button';
+import {taskFormStyles} from '../theme/TaskForm.styles';
 
 const TaskCreationScreen = () => {
   const {goBack} = useAppNavigation();
-  const {control, handleSubmit, formState, reset} = useForm<Task>();
+  const {control, handleSubmit, formState} = useForm<Task>();
   const {errors} = formState;
   const {addTask, tasks} = useTasksContext();
 
@@ -22,8 +24,8 @@ const TaskCreationScreen = () => {
   };
 
   return (
-    <View style={{flex: 1}}>
-      <Text>TaskCreationScreen</Text>
+    <View style={taskFormStyles.container}>
+      <Text style={taskFormStyles.title}>Create new task</Text>
       <FormInput<Task>
         control={control}
         controlName="title"
@@ -51,10 +53,12 @@ const TaskCreationScreen = () => {
           placeholder: 'Cleanin.',
         }}
       />
-
-      <TouchableOpacity onPress={handleSubmit(handleAddTask)}>
-        <Text>Add task</Text>
-      </TouchableOpacity>
+      <Button
+        onPress={handleSubmit(handleAddTask)}
+        title="Add task"
+        color="#03DAC590"
+        styles={taskFormStyles.addButton}
+      />
     </View>
   );
 };

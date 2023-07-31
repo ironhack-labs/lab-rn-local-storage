@@ -9,6 +9,7 @@ import {
   TaskDetailScreen,
   TasksListScreen,
 } from '../screens';
+import {appStyles} from '../theme/App.styles';
 
 export type TaskDetailScreenProps = NativeStackScreenProps<
   TaskStackParamList,
@@ -19,7 +20,9 @@ const TaskStack = createNativeStackNavigator<TaskStackParamList>();
 
 const TaskStackNavigator = () => {
   return (
-    <TaskStack.Navigator initialRouteName="TasksList">
+    <TaskStack.Navigator
+      initialRouteName="TasksList"
+      screenOptions={{headerShown: false, contentStyle: appStyles.container}}>
       <TaskStack.Screen name="TaskCreation" component={TaskCreationScreen} />
       <TaskStack.Screen name="TaskDetails" component={TaskDetailScreen} />
       <TaskStack.Screen name="TasksList" component={TasksListScreen} />

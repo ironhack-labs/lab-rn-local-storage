@@ -1,10 +1,11 @@
 import {SafeAreaView, StatusBar} from 'react-native';
 import React, {PropsWithChildren} from 'react';
+import {appStyles} from '../theme/App.styles';
 
 const AppContainer = ({children}: PropsWithChildren) => {
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <StatusBar barStyle={'dark-content'} />
+    <SafeAreaView style={appStyles.container}>
+      <StatusBar barStyle={'light-content'} />
       {children}
     </SafeAreaView>
   );
