@@ -1,4 +1,6 @@
 import type {Task} from '../../types';
+import {v4 as uuidv4} from 'uuid';
+
 // NOTE: temporal mock
 import {TASKS_DATA} from '../../__mocks__';
 
@@ -37,6 +39,7 @@ export const appReducer = (
   state: AppState,
   action: AppTypeActions,
 ): AppState => {
+  console.log('action', action);
   switch (action.type) {
     case APP_TYPES.REHYDRATE:
       return {
@@ -47,7 +50,7 @@ export const appReducer = (
       return {
         ...state,
         tasks: [...state.tasks].concat({
-          id: 'random-id', // TODO: generare random id
+          id: uuidv4(),
           ...action.payload.task,
         }),
       };

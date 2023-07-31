@@ -1,15 +1,19 @@
 import {useEffect, useState} from 'react';
 
-import {getStorageData} from '../../utils';
+import {getStorageData, setStorageData} from '../../utils';
 import type {AppState} from './app-reducer';
-import {KEY_STORAGE} from '../../constants';
 
 type UseSessionStorageProps = {
+  appState: AppState;
   callback: (appState: AppState) => void;
 };
 
-export const useSessionStorage = ({callback}: UseSessionStorageProps) => {
+export const useSessionStorage = ({
+  appState,
+  callback,
+}: UseSessionStorageProps) => {
   const [isLoading, setLoading] = useState(true);
+  const KEY_STORAGE = 'app-state';
 
   useEffect(() => {
     getStorageData<AppState>(KEY_STORAGE).then(state => {
@@ -18,7 +22,12 @@ export const useSessionStorage = ({callback}: UseSessionStorageProps) => {
       }
       setLoading(false);
     });
-  }, [callback, setLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setStorageData<AppState>(KEY_STORAGE, appState);
+  }, [appState]);
 
   return {
     isLoading,
