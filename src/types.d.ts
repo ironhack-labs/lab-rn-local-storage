@@ -7,6 +7,7 @@ export type Task = {
   title: string;
   description: string;
   category: string;
+  isCompleted: boolean;
 };
 
 export type TaskStackParamList = {
@@ -18,7 +19,8 @@ export type TaskStackParamList = {
 export type TasksContextState = {
   tasks: Task[];
   addTask: (task: Task) => void;
-  updateTask: (task: Task) => void;
+  updateTaskStatus: (taskId: number) => void;
+  removeTask: (taskId: number) => void;
 };
 
 export type TasksReducerState = {
@@ -31,8 +33,12 @@ export type TasksReducerAction =
       payload: {task: Task};
     }
   | {
-      type: 'updateTask';
-      payload: {task: Task};
+      type: 'updateTaskStatus';
+      payload: {taskId: number};
+    }
+  | {
+      type: 'removeTask';
+      payload: {taskId: number};
     };
 
 export type FormInputProps<T extends object> = {
@@ -42,4 +48,9 @@ export type FormInputProps<T extends object> = {
   error?: string;
   required?: boolean;
   readonly?: boolean;
+};
+
+export type ReadonlyInputProps = {
+  inputProps?: TextInputProps;
+  value?: string;
 };

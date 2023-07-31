@@ -17,17 +17,25 @@ export const TasksContextProvider = ({...props}) => {
     });
   };
 
-  const updateTask = (task: Task) => {
+  const updateTaskStatus = (taskId: number) => {
     dispatch({
-      type: 'updateTask',
-      payload: {task},
+      type: 'updateTaskStatus',
+      payload: {taskId},
+    });
+  };
+
+  const removeTask = (taskId: number) => {
+    dispatch({
+      type: 'removeTask',
+      payload: {taskId},
     });
   };
 
   const ctxValue: TasksContextState = {
     tasks,
     addTask,
-    updateTask,
+    removeTask,
+    updateTaskStatus,
   };
 
   return <TasksContext.Provider {...props} value={ctxValue} />;
