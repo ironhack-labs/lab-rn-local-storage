@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { SafeAreaView, Text, TextInput, Button } from 'react-native';
 import { useTasksContext } from '../context/TasksContext';
 import { Task } from '../types/Task';
 
@@ -27,7 +27,7 @@ const CreateTaskScreen = () => {
   };
 
   return (
-    <View>
+    <SafeAreaView>
       <Text>Título:</Text>
       <TextInput
         value={title}
@@ -50,7 +50,7 @@ const CreateTaskScreen = () => {
       />
 
       <Button title="Crear Tarea" onPress={handleSubmit} />
-    </View>
+    </SafeAreaView>
   );
 };
 

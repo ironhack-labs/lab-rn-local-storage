@@ -7,7 +7,6 @@ import CreateTaskScreen from '../screens/CreateTaskScreen';
 import TaskDetailScreen from '../screens/TaskDetailScreen';
 import { Task } from '../types/Task';
 
-// Corregir la definición de TaskDetailNavigationProp para utilizar RootStackParamList
 export type RootStackParamList = {
   Tareas: undefined;
   Detalles: { task: Task };

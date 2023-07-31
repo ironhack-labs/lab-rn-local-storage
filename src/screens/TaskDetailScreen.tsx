@@ -2,11 +2,13 @@ import React from 'react';
 import { SafeAreaView, Text, Button } from 'react-native';
 import { useTasksContext } from '../context/TasksContext';
 import { Task } from '../types/Task';
-import { TaskDetailProps } from '../types/Task';
 
+export interface TaskDetailProps {
+  route: { params: { task: Task } };
+  navigation: { goBack: () => void };
+}
 
-
-const TaskDetailScreen = ({ route, navigation }: TaskDetailProps) => {
+const TaskDetailScreen: React.FC<TaskDetailProps> = ({ route, navigation }) => {
   const { task } = route.params;
   const { dispatch } = useTasksContext();
 

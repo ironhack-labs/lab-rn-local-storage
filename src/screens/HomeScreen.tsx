@@ -5,7 +5,7 @@ import { Task } from '../types/Task';
 import { useNavigation } from '@react-navigation/native';
 import { TaskDetailNavigationProp } from '../navigation/AppNavigator';
 
-const HomeScreen = () => {
+const HomeScreen: React.FC = () => {
   const { state, dispatch } = useTasksContext();
   const navigation = useNavigation<TaskDetailNavigationProp>();
 
@@ -17,15 +17,28 @@ const HomeScreen = () => {
       { id: 3, title: 'Tarea 3', category: 'Estudio', description: 'efwefewfefwewfe', completed: false },
     ];
 
-    // Agregar tareas al estado solo si está vacío
+    const dummyCategories = [...new Set(dummyTasks.map((task) => task.category))];
+
+    // Agregar tareas y categorías al estado solo si están vacías
     if (state.tasks.length === 0) {
       dummyTasks.forEach((task) => dispatch({ type: 'ADD_TASK', payload: task }));
     }
-  }, [dispatch, state.tasks.length]);
+    if (state.categories.length === 0) {
+      dummyCategories.forEach((category) => dispatch({ type: 'ADD_CATEGORY', payload: category }));
+    }
+  }, [dispatch, state.tasks.length, state.categories.length]);
 
   const handleTaskPress = (task: Task) => {
     navigation.navigate('Detalles', { task });
   };
+
+  const handleCategorySelect = (category: string) => {
+    dispatch({ type: 'SELECT_CATEGORY', payload: category });
+  };
+
+  const filteredTasks = state.selectedCategory
+    ? state.tasks.filter((task) => task.category === state.selectedCategory)
+    : state.tasks;
 
   const renderItem = ({ item }: { item: Task }) => (
     <TouchableOpacity onPress={() => handleTaskPress(item)}>
@@ -41,9 +54,23 @@ const HomeScreen = () => {
     <SafeAreaView>
       <Text>Lista de Tareas:</Text>
       <FlatList
-        data={state.tasks}
+        data={filteredTasks}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
+      />
+
+      <Text>Filtrar por categoría:</Text>
+      <FlatList
+        data={state.categories}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => handleCategorySelect(item)}>
+            <View>
+              <Text>{item}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item}
+        horizontal
       />
     </SafeAreaView>
   );
