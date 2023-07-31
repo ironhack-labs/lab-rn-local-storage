@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Text, StyleSheet, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import CategoryItem from './CategoryItem';
 
 interface CategoryListProps {
@@ -24,14 +24,5 @@ const CategoryList: React.FC<CategoryListProps> = ({ categories, selectedCategor
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  heading: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginVertical: 8,
-    textTransform: 'uppercase',
-  },
-});
 
 export default CategoryList;
