@@ -1,10 +1,9 @@
 import React from 'react';
-import {View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Button, Card, Text, Layout} from '@ui-kitten/components';
 
 import type {Task} from '../../types';
-import {NavigationProps} from '../../navigation/app-navigator.types';
+import {StackNavigationProps} from '../../navigation/app-navigator.types';
 import {useAppCtx} from '../../context';
 import {taskDetailStyles} from './task-detail.styles';
 
@@ -18,7 +17,7 @@ export const TaskDetail = ({
   status,
 }: TaskDetailProps) => {
   const {completeTask, deleteTask} = useAppCtx();
-  const {navigate} = useNavigation<NavigationProps>();
+  const {navigate} = useNavigation<StackNavigationProps>();
 
   const onDeleteTask = () => {
     deleteTask(id);

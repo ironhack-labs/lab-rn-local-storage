@@ -1,14 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 
-import {
-  Button,
-  List,
-  ListItem,
-  Icon,
-  Divider,
-  Text,
-} from '@ui-kitten/components';
+import {List, ListItem, Icon, Divider, Text} from '@ui-kitten/components';
 
 import type {TaskListScreenProps} from '../../navigation/app-navigator.types';
 import {useAppCtx} from '../../context';
@@ -49,10 +42,6 @@ export const TaskListScreen = ({navigation}: TaskListScreenProps) => {
           />
         )}
       />
-
-      <Button onPress={() => navigation.navigate('TaskCreation')}>
-        Add Task
-      </Button>
     </View>
   );
 };
