@@ -1,14 +1,38 @@
-import React, {FC} from 'react';
-import {View} from 'react-native';
+import React, {useState} from 'react';
 
-import {Text} from '@ui-kitten/components';
+import {Icon, Input} from '@ui-kitten/components';
 
 import type {TaskSearchScreenProps} from '../../navigation/app-navigator.types';
+import {useAppCtx} from '../../context';
+import {TaskList} from '../../components';
 
-export const TaskSearchScreen: FC<TaskSearchScreenProps> = () => {
+export const TaskSearchScreen = ({navigation}: TaskSearchScreenProps) => {
+  const {tasks} = useAppCtx();
+  const [search, setSearch] = useState('');
+
+  const onSearch = (text: string) => {
+    setSearch(text);
+  };
+
+  const tasksData = search
+    ? tasks.filter(({title, category}) => {
+        const regex = new RegExp(search, 'i');
+        return regex.test(title) || regex.test(category);
+      })
+    : [];
+
   return (
-    <View style={{flex: 1}}>
-      <Text>TaskSearchScreen</Text>
-    </View>
+    <>
+      <Input
+        placeholder="Search..."
+        status="default"
+        onChangeText={onSearch}
+        accessoryLeft={props => <Icon {...props} name="search-outline" />}
+      />
+      <TaskList
+        tasks={tasksData}
+        onTaskPress={task => navigation.navigate('TaskDetails', {task})}
+      />
+    </>
   );
 };

@@ -38,6 +38,6 @@ export type TaskCreationScreenProps = BottomTabScreenProps<
   'TaskCreation'
 >;
 export type TaskSearchScreenProps = BottomTabScreenProps<
-  RootBottomTabsParamList,
+  RootStackParamList & RootBottomTabsParamList,
   'TaskSearch'
 >;
