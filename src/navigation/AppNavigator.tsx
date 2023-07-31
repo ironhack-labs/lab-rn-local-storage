@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, RouteProp } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import CreateTaskScreen from '../screens/CreateTaskScreen';
@@ -17,7 +17,7 @@ export type TaskDetailNavigationProp = StackNavigationProp<RootStackParamList, '
 
 const Stack = createStackNavigator();
 
-const TasksStack: React.FC = () => (
+const TasksStack = () => (
   <Stack.Navigator>
     <Stack.Screen name="Tareas" component={HomeScreen} />
     <Stack.Screen name="Detalles" component={TaskDetailScreen} />
@@ -26,7 +26,7 @@ const TasksStack: React.FC = () => (
 
 const Tab = createBottomTabNavigator();
 
-const AppNavigator: React.FC = () => {
+const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={{ headerShown: false }}>

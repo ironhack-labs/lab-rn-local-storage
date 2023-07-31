@@ -8,7 +8,7 @@ export interface TaskDetailProps {
   navigation: { goBack: () => void };
 }
 
-const TaskDetailScreen: React.FC<TaskDetailProps> = ({ route, navigation }) => {
+const TaskDetailScreen = ({ route, navigation }: TaskDetailProps) => {
   const { task } = route.params;
   const { dispatch } = useTasksContext();
 

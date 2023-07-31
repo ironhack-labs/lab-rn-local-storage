@@ -1,7 +1,6 @@
 import React, { createContext, useReducer, useContext, Dispatch } from 'react';
 import { Task } from '../types/Task';
 
-// Define los tipos para el estado y las acciones relacionadas con las tareas y categorías
 interface TasksState {
   tasks: Task[];
   categories: string[];
@@ -17,13 +16,11 @@ type Action =
 
 type TasksDispatch = Dispatch<Action>;
 
-// Crear el contexto
 const TasksContext = createContext<{ state: TasksState; dispatch: TasksDispatch }>({
   state: { tasks: [], categories: [], selectedCategory: null },
   dispatch: () => {},
 });
 
-// Reducer para manejar las acciones relacionadas con las tareas y categorías
 const tasksReducer = (state: TasksState, action: Action): TasksState => {
   switch (action.type) {
     case 'ADD_TASK':
@@ -55,8 +52,7 @@ const tasksReducer = (state: TasksState, action: Action): TasksState => {
   }
 };
 
-// Proveedor de contexto
-const TasksProvider: React.FC<any> = ({ children }) => {
+const TasksProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(tasksReducer, { tasks: [], categories: [], selectedCategory: null });
 
   return (
@@ -64,7 +60,6 @@ const TasksProvider: React.FC<any> = ({ children }) => {
   );
 };
 
-// Función personalizada para usar el contexto
 const useTasksContext = () => useContext(TasksContext);
 
 export { TasksProvider, useTasksContext };

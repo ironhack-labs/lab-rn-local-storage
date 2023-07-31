@@ -20,7 +20,6 @@ const CreateTaskScreen = () => {
 
     dispatch({ type: 'ADD_TASK', payload: newTask });
 
-    // Limpia los campos después de agregar la tarea
     setTitle('');
     setDescription('');
     setCategory('');
