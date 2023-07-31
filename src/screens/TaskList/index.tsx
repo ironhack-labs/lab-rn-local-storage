@@ -1,11 +1,26 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {SafeAreaView, Text} from 'react-native';
+
+import {FloatingActionButton, TaskFlatList} from '../../components';
+
+import {useAppContext} from '../../hooks/useAppContext';
+
+import styles from './styles';
 
 const TaskList = () => {
+  const {tasks} = useAppContext();
+
   return (
-    <View>
-      <Text>TaskList</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      {tasks.length === 0 ? (
+        <Text>No tasks</Text>
+      ) : (
+        <TaskFlatList tasks={tasks} />
+      )}
+      <FloatingActionButton action={() => {}}>
+        <Text style={styles.fabContent}>+</Text>
+      </FloatingActionButton>
+    </SafeAreaView>
   );
 };
 

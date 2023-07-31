@@ -19,6 +19,7 @@ const AppNavigator = () => {
           component={TaskList}
           options={{
             title: 'Mis tareas',
+            headerShadowVisible: false,
           }}
         />
         <Stack.Screen
