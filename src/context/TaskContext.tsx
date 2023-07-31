@@ -30,7 +30,6 @@ export const TaskProvider = ({children}: any) => {
   }, []);
 
   useEffect(() => {
-    console.log("entra")
     storeTasksData(TaskState.items);
   }, [TaskState.items])
   

@@ -23,7 +23,6 @@ export const taskReducer = (
         ]
       };
     case 'addMultipleTasks':
-      console.log(action.payload)
       return {
         ...state,
         items: [
@@ -32,7 +31,6 @@ export const taskReducer = (
       };
 
     case 'updateTaskStatus':
-      console.log("entraaa")
       return {
         ...state,
         items : state.items.map((item, i) => i === action.payload.index ? {...item, status: action.payload.status} : item)
