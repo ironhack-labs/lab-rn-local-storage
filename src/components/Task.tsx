@@ -1,8 +1,11 @@
 import * as React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {Task as TTask} from '../types/types';
+import {useNavigation} from '@react-navigation/native';
 
 const Task: React.FC<TTask> = ({title, description, category, status}) => {
+  const {navigate} = useNavigation();
+
   const shortText = (text: string, maxLength: number) => {
     if (text.length > maxLength) {
       return text.substring(0, maxLength - 3) + '...';
@@ -12,10 +15,12 @@ const Task: React.FC<TTask> = ({title, description, category, status}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{title}</Text>
-      <Text style={styles.text}>{shortText(description, 50)}</Text>
-      <Text style={styles.text}>{category}</Text>
-      <Text style={styles.text}>{status ? 'Completed' : 'Pending'}</Text>
+      <TouchableOpacity activeOpacity={0.5} onPress={() => {}}>
+        <Text style={styles.text}>{title}</Text>
+        <Text style={styles.text}>{shortText(description, 50)}</Text>
+        <Text style={styles.text}>{category}</Text>
+        <Text style={styles.text}>{status ? 'Completed' : 'Pending'}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
