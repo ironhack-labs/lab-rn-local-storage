@@ -1,17 +1,11 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  Switch,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { useTaskList } from '../context';
+import { TaskCreationProps } from '../navigation/types';
 import { FormData } from '../types';
 
-export default function TaskCreationScreen() {
+export default function TaskCreationScreen({ navigation }: TaskCreationProps) {
   const {
     control,
     handleSubmit,
@@ -25,8 +19,8 @@ export default function TaskCreationScreen() {
       id: new Date().valueOf().toString(),
       completed: false,
     };
-    console.log(newTask);
-    // addTask(newTask);
+    addTask(newTask);
+    navigation.goBack();
   });
 
   return (

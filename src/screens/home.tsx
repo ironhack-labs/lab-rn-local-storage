@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,12 +8,16 @@ import {
   TouchableOpacity,
   ListRenderItem,
 } from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown';
+
 import { HomeProps } from '../navigation/types';
-import { Task } from '../types';
+import { Task, Category } from '../types';
 import { useTaskList } from '../context';
 
 export default function HomeScreen({ navigation }: HomeProps) {
-  const { taskList } = useTaskList();
+  const [category, setCategory] = useState<Category>('ALL');
+  const { categories, filterTaskListByCategory } = useTaskList();
+  const taskList = filterTaskListByCategory(category);
 
   const renderItem: ListRenderItem<Task> = ({ item }) => {
     return (
@@ -29,6 +33,15 @@ export default function HomeScreen({ navigation }: HomeProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Home Screen</Text>
+
+      <SelectDropdown
+        data={categories}
+        defaultValue={'ALL'}
+        onSelect={(selectedItem, index) => {
+          setCategory(selectedItem);
+        }}
+      />
+
       <Button
         title="Create New"
         onPress={() => navigation.navigate('TaskCreation')}

@@ -1,5 +1,6 @@
-import { TaskList } from './types';
-const TASKS: TaskList = [
+import { TaskList, Category } from './types';
+
+export const TASKS: TaskList = [
   {
     id: '1690823282402',
     title: 'Lorems Ipsum',
@@ -34,4 +35,4 @@ const TASKS: TaskList = [
   },
 ];
 
-export default TASKS;
+export const CATEGORIES: Category[] = ['ALL', 'HOME', 'WORK', 'LEARNING'];

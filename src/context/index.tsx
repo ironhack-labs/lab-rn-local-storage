@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import TASKS from '../mock-tasks';
-import { Task, TaskList } from '../types';
+import { TASKS, CATEGORIES } from '../mock-tasks';
+import { Task, TaskList, Category } from '../types';
 
 interface ProviderProps {
   children: React.ReactNode;
@@ -9,10 +9,12 @@ interface ProviderProps {
 
 interface State {
   taskList: TaskList;
+  categories: string[];
 }
 
 interface ContextProps {
   taskList: TaskList;
+  categories: string[];
   addTask: (item: Task) => void;
   updateTaskStatus: (id: string) => void;
   deleteTask: (id: string) => void;
@@ -30,6 +32,7 @@ const taskReducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'SET_DEFAULT_TASKS':
       return {
+        ...state,
         taskList: action.payload.taskList,
       };
     case 'ADD_TASK':
@@ -49,6 +52,7 @@ const taskReducer = (state: State, action: Action): State => {
       };
     case 'DELETE_TASK':
       return {
+        ...state,
         taskList: taskList.filter(item => item.id !== action.payload.id),
       };
     default:
@@ -58,13 +62,17 @@ const taskReducer = (state: State, action: Action): State => {
 
 export const TaskListContext = createContext<ContextProps>({
   taskList: [],
+  categories: [],
   addTask: () => {},
   updateTaskStatus: () => {},
   deleteTask: () => {},
 });
 
 export function TaskProvider({ children }: ProviderProps) {
-  const [state, dispatch] = useReducer(taskReducer, { taskList: [] });
+  const [state, dispatch] = useReducer(taskReducer, {
+    taskList: [],
+    categories: CATEGORIES,
+  });
 
   const addTask = async (task: Task) => {
     const dataFromStorage = await AsyncStorage.getItem(
@@ -177,8 +185,17 @@ export function useTaskList() {
     return tasks.length ? tasks[0] : null;
   }
 
+  function filterTaskListByCategory(category: Category) {
+    if (category === 'ALL') {
+      return cartContext.taskList;
+    }
+
+    return cartContext.taskList.filter(item => item.category === category);
+  }
+
   return {
     ...cartContext,
     getTaskById,
+    filterTaskListByCategory,
   };
 }
