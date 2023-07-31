@@ -3,13 +3,13 @@ import {Action, Task} from '../types/types';
 
 type AppState = {
   tasks: Task[];
+  addTask: (taks: Task) => void;
 };
 
 const initialState: AppState = {
   tasks: [],
+  addTask: () => {},
 };
-
-const AppContext = createContext<AppState>(initialState);
 
 const AppReducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
@@ -23,6 +23,8 @@ const AppReducer = (state: AppState, action: Action): AppState => {
   }
   return state;
 };
+
+const AppContext = createContext<AppState>(initialState);
 
 export const AppProvider = ({children}: {children: React.ReactNode}) => {
   const [{tasks}, dispatch] = useReducer(AppReducer, initialState);

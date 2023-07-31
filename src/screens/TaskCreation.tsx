@@ -4,9 +4,8 @@ import MyButton from '../components/MyButton';
 import {useApp} from '../context/Context';
 
 const TaskCreation = () => {
-
   const {addTask} = useApp();
-  
+
   const addNewTask = () => {
     const demoTask = {
       title: 'Lorem ipsum dolor sit amet 1',
