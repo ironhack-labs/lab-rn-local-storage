@@ -6,3 +6,8 @@ export type Task = {
 };
 
 export type Tasks = Task[];
+
+export type BtnType = {
+  title: string;
+  onPress: Function;
+};
