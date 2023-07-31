@@ -6,6 +6,7 @@ const TASKS: TaskList = [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     category: 'WORK',
+    completed: false,
   },
   {
     id: '1690823448635',
@@ -13,6 +14,7 @@ const TASKS: TaskList = [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     category: 'HOME',
+    completed: false,
   },
   {
     id: '1690823475734',
@@ -20,6 +22,7 @@ const TASKS: TaskList = [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     category: 'HOME',
+    completed: false,
   },
   {
     id: '1690823456330',
@@ -27,6 +30,7 @@ const TASKS: TaskList = [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     category: 'LEARNING',
+    completed: false,
   },
 ];
 

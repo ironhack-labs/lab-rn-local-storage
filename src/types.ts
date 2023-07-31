@@ -5,6 +5,7 @@ export type Task = {
   title: string;
   description: string;
   category: CATEGORY;
+  completed: boolean;
 };
 
 export type TaskList = Task[];
