@@ -1,11 +1,19 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  NativeStackScreenProps,
+  createNativeStackNavigator,
+} from '@react-navigation/native-stack';
 import {TaskStackParamList} from '../types';
 import {
   TaskCreationScreen,
   TaskDetailScreen,
   TasksListScreen,
 } from '../screens';
+
+export type TaskDetailScreenProps = NativeStackScreenProps<
+  TaskStackParamList,
+  'TaskDetails'
+>;
 
 const TaskStack = createNativeStackNavigator<TaskStackParamList>();
 

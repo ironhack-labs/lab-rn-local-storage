@@ -1,3 +1,5 @@
+import {TextInputProps} from 'react-native';
+
 export type Categories = string[];
 
 export type Task = {
@@ -9,7 +11,7 @@ export type Task = {
 
 export type TaskStackParamList = {
   TaskCreation: undefined;
-  TaskDetails: undefined;
+  TaskDetails: {task: Task};
   TasksList: undefined;
 };
 
@@ -25,4 +27,13 @@ export type TasksReducerState = {
 export type TasksReducerAction = {
   type: 'addTask';
   payload: {task: Task};
+};
+
+export type FormInputProps<T extends object> = {
+  control: Control<T>;
+  controlName: Path<T>;
+  inputProps?: TextInputProps;
+  error?: string;
+  required?: boolean;
+  readonly?: boolean;
 };
