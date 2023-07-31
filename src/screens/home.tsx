@@ -5,6 +5,7 @@ import {
   StyleSheet,
   FlatList,
   Button,
+  TouchableOpacity,
   ListRenderItem,
 } from 'react-native';
 import { HomeProps } from '../navigation/types';
@@ -13,13 +14,15 @@ import { useTaskList } from '../context';
 
 export default function HomeScreen({ navigation }: HomeProps) {
   const { taskList } = useTaskList();
+
   const renderItem: ListRenderItem<Task> = ({ item }) => {
     return (
-      <View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('TaskDetail', { id: item.id })}>
         <Text>{item.id}</Text>
         <Text>{item.title}</Text>
         <Text>{item.category}</Text>
-      </View>
+      </TouchableOpacity>
     );
   };
 

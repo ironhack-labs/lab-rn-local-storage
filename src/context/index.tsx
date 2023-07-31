@@ -15,12 +15,14 @@ interface ContextProps {
   taskList: TaskList;
   addTask: (item: Task) => void;
   updateTaskStatus: (id: string) => void;
+  deleteTask: (id: string) => void;
 }
 
 type Action =
   | { type: 'SET_DEFAULT_TASKS'; payload: { taskList: Task[] } }
   | { type: 'ADD_TASK'; payload: { task: Task } }
-  | { type: 'UPDATE_TASK_STATUS'; payload: { id: string } };
+  | { type: 'UPDATE_TASK_STATUS'; payload: { id: string } }
+  | { type: 'DELETE_TASK'; payload: { id: string } };
 
 const taskReducer = (state: State, action: Action): State => {
   const { taskList } = state;
@@ -45,6 +47,10 @@ const taskReducer = (state: State, action: Action): State => {
           return item;
         }),
       };
+    case 'DELETE_TASK':
+      return {
+        taskList: taskList.filter(item => item.id !== action.payload.id),
+      };
     default:
       return state;
   }
@@ -54,6 +60,7 @@ export const TaskListContext = createContext<ContextProps>({
   taskList: [],
   addTask: () => {},
   updateTaskStatus: () => {},
+  deleteTask: () => {},
 });
 
 export function TaskProvider({ children }: ProviderProps) {
@@ -97,6 +104,26 @@ export function TaskProvider({ children }: ProviderProps) {
     dispatch({ type: 'UPDATE_TASK_STATUS', payload: { id } });
   };
 
+  const deleteTask = async (id: string) => {
+    const dataFromStorage = await AsyncStorage.getItem(
+      'RN_LAB_LOCAL_STORAGE::taskList',
+    );
+    if (dataFromStorage) {
+      const data: TaskList = JSON.parse(dataFromStorage);
+      const updatedData = data.filter((item: Task) => item.id !== id);
+
+      const ids = updatedData.map(item => item.id);
+      console.log(`deleteTask ${id}`, ids);
+
+      await AsyncStorage.setItem(
+        'RN_LAB_LOCAL_STORAGE::taskList',
+        JSON.stringify(updatedData),
+      );
+    }
+
+    dispatch({ type: 'DELETE_TASK', payload: { id } });
+  };
+
   useEffect(() => {
     async function setDefaultData() {
       /**
@@ -107,30 +134,36 @@ export function TaskProvider({ children }: ProviderProps) {
       const dataFromStorage = await AsyncStorage.getItem(
         'RN_LAB_LOCAL_STORAGE::taskList',
       );
-      const defaultTasks = dataFromStorage
-        ? JSON.parse(dataFromStorage)
-        : TASKS;
 
-      /**
-       * Si no existia nada en el storage del dispositivo también
-       * se aprovecha para guardarlo usando AsyncStorage
-       */
-      await AsyncStorage.setItem(
-        'RN_LAB_LOCAL_STORAGE::taskList',
-        JSON.stringify(TASKS),
-      );
+      // console.log('-> dataFromStorage', dataFromStorage);
 
-      dispatch({
-        type: 'SET_DEFAULT_TASKS',
-        payload: { taskList: defaultTasks },
-      });
+      if (dataFromStorage === null || dataFromStorage === '[]') {
+        console.log('... save TASKS in localstorage');
+        await AsyncStorage.setItem(
+          'RN_LAB_LOCAL_STORAGE::taskList',
+          JSON.stringify(TASKS),
+        );
+
+        dispatch({
+          type: 'SET_DEFAULT_TASKS',
+          payload: { taskList: TASKS },
+        });
+      } else {
+        const taskList = JSON.parse(dataFromStorage);
+
+        dispatch({
+          type: 'SET_DEFAULT_TASKS',
+          payload: { taskList },
+        });
+      }
     }
 
     setDefaultData();
   }, []);
 
   return (
-    <TaskListContext.Provider value={{ ...state, addTask, updateTaskStatus }}>
+    <TaskListContext.Provider
+      value={{ ...state, addTask, updateTaskStatus, deleteTask }}>
       {children}
     </TaskListContext.Provider>
   );
@@ -139,7 +172,13 @@ export function TaskProvider({ children }: ProviderProps) {
 export function useTaskList() {
   const cartContext = useContext(TaskListContext);
 
+  function getTaskById(id: string) {
+    const tasks = cartContext.taskList.filter(item => item.id === id);
+    return tasks.length ? tasks[0] : null;
+  }
+
   return {
     ...cartContext,
+    getTaskById,
   };
 }
