@@ -3,7 +3,6 @@ import { Text, FlatList, SafeAreaView, TouchableOpacity, StyleSheet } from 'reac
 import { useTasksContext } from '../context/TasksContext';
 import { Task } from '../types/Task';
 import TaskItem from '../components/TaskItem';
-import CategoryItem from '../components/CategoryItem';
 import CategoryList from '../components/CategoryList';
 
 const HomeScreen = () => {

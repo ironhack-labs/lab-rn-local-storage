@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { useTasksContext } from '../context/TasksContext';
-import { Task } from '../types/Task';
+import React, {useState} from 'react';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
+import {useTasksContext} from '../context/TasksContext';
+import {Task} from '../types/Task';
 
 const CreateTaskScreen = () => {
-  const { state, dispatch } = useTasksContext();
+  const {state, dispatch} = useTasksContext();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
@@ -18,63 +26,79 @@ const CreateTaskScreen = () => {
       completed: false,
     };
 
-    dispatch({ type: 'ADD_TASK', payload: newTask });
+    dispatch({type: 'ADD_TASK', payload: newTask});
 
     setTitle('');
     setDescription('');
     setCategory('');
   };
 
+  const filteredCategories = state.categories.filter(
+    cat => cat !== 'Mostrar todo',
+  );
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.formGroup}>
-        <Text style={styles.label}>Título:</Text>
-        <TextInput
-          style={styles.input}
-          value={title}
-          onChangeText={setTitle}
-          placeholder="Escribe el título de la tarea"
-        />
-      </View>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Título:</Text>
+          <TextInput
+            style={styles.input}
+            value={title}
+            onChangeText={setTitle}
+            placeholder="Escribe el título de la tarea"
+          />
+        </View>
 
-      <View style={styles.formGroup}>
-        <Text style={styles.label}>Descripción:</Text>
-        <TextInput
-          style={styles.input}
-          value={description}
-          onChangeText={setDescription}
-          placeholder="Escribe la descripción de la tarea"
-        />
-      </View>
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Descripción:</Text>
+          <TextInput
+            style={styles.input}
+            value={description}
+            onChangeText={setDescription}
+            placeholder="Escribe la descripción de la tarea"
+          />
+        </View>
 
-      <View style={styles.formGroup}>
-        <Text style={styles.label}>Categoría:</Text>
-        <TextInput
-          style={styles.input}
-          value={category}
-          onChangeText={setCategory}
-          placeholder="Escribe la categoría de la tarea"
-        />
-      </View>
+        <View style={styles.formGroup}>
+          <Text style={styles.label}>Categoría:</Text>
+          <TextInput
+            style={styles.input}
+            value={category}
+            onChangeText={setCategory}
+            placeholder="Nueva Categoria"
+          />
+        </View>
 
-      <Text style={styles.availableCategoriesLabel}>Categorías disponibles:</Text>
-      <View style={styles.categoriesContainer}>
-        {state.categories.map((cat) => (
-          <TouchableOpacity
-            key={cat}
-            style={[styles.categoryButton, cat === category && styles.selectedCategoryButton]}
-            onPress={() => setCategory(cat)}
-          >
-            <Text style={[styles.categoryButtonText, cat === category && styles.selectedCategoryButtonText]}>
-              {cat}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+        <Text style={styles.availableCategoriesLabel}>
+          Categorías actuales:
+        </Text>
+        <View style={styles.categoriesContainer}>
+          {filteredCategories.map(cat => (
+            <TouchableOpacity
+              key={cat}
+              style={[
+                styles.categoryButton,
+                cat === category && styles.selectedCategoryButton,
+              ]}
+              onPress={() => setCategory(cat)}>
+              <Text
+                style={[
+                  styles.categoryButtonText,
+                  cat === category && styles.selectedCategoryButtonText,
+                ]}>
+                {cat}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
 
-      <TouchableOpacity style={styles.createTaskButton} onPress={handleSubmit}>
-        <Text style={styles.createTaskButtonText}>Crear Tarea</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.createTaskButton}
+          onPress={handleSubmit}>
+          <Text style={styles.createTaskButtonText}>Crear Tarea</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -84,6 +108,9 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 10,
     marginTop: 20,
+  },
+  contentContainer: {
+    paddingBottom: 20,
   },
   formGroup: {
     marginBottom: 20,
