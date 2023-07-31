@@ -24,7 +24,13 @@ const TaskList = () => {
   return (
     <View>
       {tasks.map((task, index) => (
-        <Task data={task} key={index} />
+        <Task
+          key={index}
+          title={task.title}
+          description={task.description}
+          category={task.category}
+          status={task.status}
+        />
       ))}
     </View>
   );
