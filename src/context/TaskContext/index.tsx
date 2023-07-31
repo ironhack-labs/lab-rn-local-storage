@@ -5,6 +5,7 @@ import {TasksContextProvider} from './TaskContextProvider';
 const INITIAL_CTX_VALUE: TasksContextState = {
   tasks: [],
   addTask: () => {},
+  updateTask: () => {},
 };
 
 const TasksContext = createContext<TasksContextState>(INITIAL_CTX_VALUE);

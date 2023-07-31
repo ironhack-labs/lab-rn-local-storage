@@ -18,16 +18,22 @@ export type TaskStackParamList = {
 export type TasksContextState = {
   tasks: Task[];
   addTask: (task: Task) => void;
+  updateTask: (task: Task) => void;
 };
 
 export type TasksReducerState = {
   tasks: Task[];
 };
 
-export type TasksReducerAction = {
-  type: 'addTask';
-  payload: {task: Task};
-};
+export type TasksReducerAction =
+  | {
+      type: 'addTask';
+      payload: {task: Task};
+    }
+  | {
+      type: 'updateTask';
+      payload: {task: Task};
+    };
 
 export type FormInputProps<T extends object> = {
   control: Control<T>;

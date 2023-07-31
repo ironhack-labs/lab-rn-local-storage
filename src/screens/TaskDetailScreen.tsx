@@ -1,12 +1,13 @@
 import {FormInput} from '../components';
 import {Task} from '../types';
 import {TaskDetailScreenProps} from '../navigation/TaskStackNavigator';
-import {useAppNavigation} from '../hooks';
+import {useAppNavigation, useTasksContext} from '../hooks';
 import {useForm} from 'react-hook-form';
 import {View, Text, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 
 const TaskDetailScreen = ({route}: TaskDetailScreenProps) => {
+  const {updateTask} = useTasksContext();
   const [readonly, setReadonly] = useState(true);
   const {goBack} = useAppNavigation();
   const {control, handleSubmit, formState} = useForm<Task>({
@@ -17,8 +18,12 @@ const TaskDetailScreen = ({route}: TaskDetailScreenProps) => {
   const {errors} = formState;
 
   const handleUpdateTask = (task: Task) => {
-    console.log('handleUpdateTask', task);
-    goBack();
+    try {
+      updateTask(task);
+      goBack();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

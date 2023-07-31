@@ -11,6 +11,12 @@ const tasksReducer = (
   switch (action.type) {
     case 'addTask':
       return {...state, tasks: [...state.tasks, action.payload.task]};
+    case 'updateTask': {
+      const taskUpdated = action.payload.task;
+      const taskIndex = state.tasks.findIndex(x => x.id === taskUpdated.id);
+      state.tasks[taskIndex] = {...taskUpdated};
+      return {...state, tasks: [...state.tasks]};
+    }
     default:
       return state;
   }
