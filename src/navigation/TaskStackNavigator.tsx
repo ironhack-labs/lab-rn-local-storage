@@ -11,7 +11,7 @@ const TaskStack = createStackNavigator<TaskStackParamList>();
 
 const TaskStackNavigator = () => {
   return (
-    <TaskStack.Navigator>
+    <TaskStack.Navigator initialRouteName="TasksList">
       <TaskStack.Screen name="TaskCreation" component={TaskCreationScreen} />
       <TaskStack.Screen name="TaskDetails" component={TaskDetailScreen} />
       <TaskStack.Screen name="TasksList" component={TasksListScreen} />
