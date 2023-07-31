@@ -3,7 +3,7 @@ import { View, Text, FlatList, SafeAreaView, TouchableOpacity } from 'react-nati
 import { useTasksContext } from '../context/TasksContext';
 import { Task } from '../types/Task';
 import { useNavigation } from '@react-navigation/native';
-import { TaskDetailNavigationProp } from '../navigation/AppNavigator';
+import { TaskDetailNavigationProp } from '../types/Task';
 
 const HomeScreen = () => {
   const { state, dispatch } = useTasksContext();
