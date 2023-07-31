@@ -26,7 +26,8 @@ const AppNavigator = () => {
           name={TASK_CREATION}
           component={TaskCreation}
           options={{
-            title: 'Crear tarea',
+            title: 'Nueva tarea',
+            headerBackVisible: false,
           }}
         />
         <Stack.Screen
@@ -34,6 +35,7 @@ const AppNavigator = () => {
           component={TaskDetails}
           options={{
             title: 'Detalles de la tarea',
+            headerBackVisible: false,
           }}
         />
       </Stack.Navigator>

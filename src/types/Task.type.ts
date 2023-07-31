@@ -5,3 +5,5 @@ export type Task = {
   completed: boolean;
   category: string;
 };
+
+export type NewTask = Omit<Task, 'id'>;

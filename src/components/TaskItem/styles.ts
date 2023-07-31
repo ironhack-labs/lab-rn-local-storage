@@ -1,9 +1,11 @@
 import {StyleSheet} from 'react-native';
 
+import {greyColor, lightColor} from '../../theme/global.styles';
+
 export default StyleSheet.create({
   container: {
     padding: 15,
-    backgroundColor: '#fff',
+    backgroundColor: lightColor,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -18,7 +20,7 @@ export default StyleSheet.create({
   categoryContainer: {
     paddingVertical: 5,
     paddingHorizontal: 10,
-    backgroundColor: '#e3e3e3',
+    backgroundColor: greyColor,
     borderRadius: 5,
     alignSelf: 'flex-start',
   },

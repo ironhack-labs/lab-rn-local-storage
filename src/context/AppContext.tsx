@@ -1,33 +1,35 @@
 import React, {
   PropsWithChildren,
   createContext,
+  useCallback,
   useEffect,
   useReducer,
 } from 'react';
 
-import type {Task} from '../types/Task.type';
+import type {NewTask, Task} from '../types/Task.type';
 
 import {getData, saveData} from '../helpers/storage';
 
-const INITIAL_TASKS: Task[] = [
-  {
-    id: 1,
-    title: 'Task 1',
-    description: 'Description 1',
-    completed: true,
-    category: 'work',
-  },
-  {
-    id: 2,
-    title: 'Task 2',
-    description: 'Description 2',
-    completed: false,
-    category: 'ironhack',
-  },
-];
+// const INITIAL_TASKS: Task[] = [
+//   {
+//     id: 1,
+//     title: 'Task 1',
+//     description: 'Description 1',
+//     completed: true,
+//     category: 'work',
+//   },
+//   {
+//     id: 2,
+//     title: 'Task 2',
+//     description: 'Description 2',
+//     completed: false,
+//     category: 'ironhack',
+//   },
+// ];
 
 type AppState = {
   tasks: Task[];
+  addTask: (newTask: NewTask) => void;
 };
 
 type ACTION_TYPE =
@@ -39,13 +41,16 @@ type ACTION_TYPE =
 type AppProviderProps = PropsWithChildren<{}>;
 
 const initialState: AppState = {
-  tasks: INITIAL_TASKS,
+  tasks: [],
+  addTask: () => {},
 };
 
 const reducer = (state: AppState, action: ACTION_TYPE): AppState => {
   switch (action.type) {
     case 'SET_TASKS':
       return {...state, tasks: action.payload};
+    case 'ADD_TASK':
+      return {...state, tasks: [...state.tasks, action.payload]};
     default:
       return state;
   }
@@ -60,6 +65,10 @@ const AppProvider = ({children}: AppProviderProps) => {
     searchSavedTasks();
   }, []);
 
+  useEffect(() => {
+    saveData('tasks', JSON.stringify(state.tasks));
+  }, [state.tasks]);
+
   const searchSavedTasks = async () => {
     const tasks = await getData('tasks');
 
@@ -68,12 +77,15 @@ const AppProvider = ({children}: AppProviderProps) => {
     }
   };
 
-  const saveTasks = async () => {
-    await saveData('tasks', JSON.stringify(state.tasks));
+  const addTask = (newTask: NewTask) => {
+    dispatch({
+      type: 'ADD_TASK',
+      payload: {...newTask, id: state.tasks.length + 1},
+    });
   };
 
   return (
-    <AppContext.Provider value={{tasks: state.tasks}}>
+    <AppContext.Provider value={{tasks: state.tasks, addTask}}>
       {children}
     </AppContext.Provider>
   );
