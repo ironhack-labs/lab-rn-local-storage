@@ -5,8 +5,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { s } from './CardTodo.styles';
 
 export const CartTodo = () => {
-  const {todoState, signIn} = useContext(TodoContext);
+  const {todoState} = useContext(TodoContext);
   console.log(todoState)
+  
   return (
     <ScrollView>
     {

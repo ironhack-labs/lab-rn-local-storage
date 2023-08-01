@@ -11,7 +11,7 @@ export interface TodoState {
 
 export interface TodoContextProps {
   todoState: TodoState[];
-  signIn: () => void;
+  createTask: (task: TodoState) => void;
 }
 
 export const todoInitialState: TodoState[] =  [
@@ -79,16 +79,17 @@ export const TodoProvider = ({children}: {children: JSX.Element[]}) => {
 
   const [todoState, dispatch] = useReducer(todoReducer, todoInitialState);
 
-  const signIn = () => {
+  const createTask = (task:TodoState) => {
     dispatch({
-      type: 'signIn'
+      type: 'createTask',
+      payload: task
     })
   }
 
   return (
     <TodoContext.Provider value={{
       todoState,
-      signIn
+      createTask
     }}>
       {children}
     </TodoContext.Provider>

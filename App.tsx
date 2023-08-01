@@ -3,13 +3,26 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { View } from 'react-native'
 import { s } from './src/theme/TodoTheme';
-import { BottomTab, CartTodo, Header } from './src/components';
+import { BottomTab, CartTodo, CreateTask, Header } from './src/components';
 import { TodoProvider } from './src/context/TodoContext';
 
 
 export const App = () => {
 
   const [activeTabOption, setActiveTabOption] = useState('todoTasks')
+
+  const handleScreenToShow = () => {
+    switch(activeTabOption) {
+      case 'todoTasks':
+        return <CartTodo/>;
+      
+      case 'createTask':
+        return <CreateTask/>;
+
+      case 'detailTask':
+        return 'detail';
+    }
+  }
 
   return (
     <AppState>
@@ -19,7 +32,7 @@ export const App = () => {
             <Header/>
           </View>
           <View style={s.body}>
-            <CartTodo/>
+            {handleScreenToShow()}
           </View>
         </SafeAreaView>
       </SafeAreaProvider>

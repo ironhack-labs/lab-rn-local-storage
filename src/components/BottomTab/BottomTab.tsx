@@ -10,7 +10,6 @@ interface BottomTabsProps {
 
 export const BottomTab:FC<BottomTabsProps> = ({activeTabOption, onPress}) => {
 
-
   const {todoState} = useContext(TodoContext);
 
   const handleActiveOption = (selectedOption: string): StyleProp<TextStyle> => {
