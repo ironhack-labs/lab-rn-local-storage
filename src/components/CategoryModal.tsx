@@ -1,7 +1,8 @@
-import {Button, Modal, TextInput, View} from 'react-native';
+import {Modal, TextInput, View} from 'react-native';
 import {useTask} from '../context/taskContext';
 import styles from '../theme/CategoryModal.styles';
 import {useState} from 'react';
+import {Button} from './Button';
 
 type PropsT = {
   isVisible: boolean;
@@ -25,11 +26,14 @@ export const CategoryModal = (props: PropsT) => {
       <View style={styles.container}>
         <TextInput
           value={value}
+          style={styles.input}
           onChangeText={text => setValue(text)}
           placeholder="Name goes here"
         />
-        <Button title="Add category" onPress={handleSubmit} />
-        <Button title="Close" onPress={props.toggleModal} />
+        <View style={styles.buttonsContainer}>
+          <Button text="Close" onPress={props.toggleModal} />
+          <Button text="Add" onPress={handleSubmit} />
+        </View>
       </View>
     </Modal>
   );
