@@ -17,5 +17,6 @@ export type BtnType = {
 
 export type Action =
   | {type: 'ADD_TASK'; payload: Task}
+  | {type: 'EDIT_TASK'; payload: Task}
   | {type: 'ADD_TASKS'; payload: Tasks}
   | {type: 'REMOVE_TASK'; payload: Task};

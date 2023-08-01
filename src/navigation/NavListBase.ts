@@ -15,3 +15,8 @@ export type AppStackNavigationProp = StackNavigationProp<
 
 // Define el tipo de ruta para las pantallas del stack
 export type AppStackRouteProp = RouteProp<NavListBase, 'TaskDetails'>;
+
+export type DetailsScreenProps = {
+  navigation: StackNavigationProp<NavListBase, 'TaskDetails'>;
+  route: RouteProp<NavListBase, 'TaskDetails'>;
+};

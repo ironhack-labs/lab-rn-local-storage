@@ -1,19 +1,14 @@
 import * as React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import GoBackBtn from '../components/GoBackBtn';
 import MyButton from '../components/MyButton';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RouteProp, useNavigation} from '@react-navigation/native';
-import {NavListBase} from '../navigation/NavListBase';
+import {useNavigation} from '@react-navigation/native';
+import {DetailsScreenProps} from '../navigation/NavListBase';
 import {useApp} from '../context/Context';
-
-type DetailsScreenProps = {
-  navigation: StackNavigationProp<NavListBase, 'TaskDetails'>;
-  route: RouteProp<NavListBase, 'TaskDetails'>;
-};
+import FormEdit from '../components/FormEdit';
 
 const TaskDetails: React.FC<DetailsScreenProps> = ({route}) => {
-  const {title, description, category, status} = route.params;
+  const {title, description, category, status, id} = route.params;
   const {removeTask} = useApp();
   const {goBack} = useNavigation();
 
@@ -27,16 +22,15 @@ const TaskDetails: React.FC<DetailsScreenProps> = ({route}) => {
     <View>
       <GoBackBtn />
       <View style={styles.containerDetails}>
-        <Text style={styles.text}>Details</Text>
-        <Text style={styles.text}>{title}</Text>
-        <Text style={styles.text}>{description}</Text>
-        <Text style={styles.text}>{category}</Text>
-        <Text style={styles.text}>{status}</Text>
+        <FormEdit
+          title={title}
+          description={description}
+          category={category}
+          status={status}
+          id={id}
+        />
         <View style={styles.options}>
-          <MyButton
-            title="Delete task"
-            onPress={() => handleRemove()}
-          />
+          <MyButton title="Delete task" onPress={() => handleRemove()} />
         </View>
       </View>
     </View>

@@ -4,31 +4,30 @@ import {useForm, Controller, SubmitHandler, FieldValues} from 'react-hook-form';
 import {FormData} from '../../interfaces/interfaces';
 import MyButton from './MyButton';
 import {useApp} from '../context/Context';
-import {Task} from '../types/types';
+import {Task as TTask} from '../types/types';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {NavListBase} from '../navigation/NavListBase';
 
-const Form: React.FC = () => {
+const FormEdit: React.FC<TTask> = ({
+  title,
+  description,
+  category,
+  status,
+  id,
+}) => {
+  const {goBack} = useNavigation<NavigationProp<NavListBase>>();
   const {
     control,
     handleSubmit,
     formState: {errors},
-    reset,
   } = useForm<FormData>();
-
-  const defaultData = {
-    title: '',
-    description: '',
-    category: 'uncategorized',
-    status: false,
-    id: Date.now(),
-  };
 
   const {editTask} = useApp();
 
-  const onSubmit = (formData: Task) => {
-    formData.id = Date.now();
+  const onSubmit = (formData: TTask) => {
     try {
-      editTask(formData);
-      reset();
+      editTask({...formData, status, id});
+      goBack();
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +50,7 @@ const Form: React.FC = () => {
             </View>
           )}
           name="title"
-          defaultValue={defaultData.title}
+          defaultValue={title}
         />
         {errors.title && <Text>{errors.title.message}</Text>}
       </View>
@@ -71,7 +70,7 @@ const Form: React.FC = () => {
             </View>
           )}
           name="description"
-          defaultValue={defaultData.description}
+          defaultValue={description}
         />
         {errors.description && <Text>{errors.description.message}</Text>}
       </View>
@@ -91,14 +90,14 @@ const Form: React.FC = () => {
             </View>
           )}
           name="category"
-          defaultValue={defaultData.category}
+          defaultValue={category}
         />
         {errors.description && <Text>{errors.description.message}</Text>}
       </View>
 
       <View style={styles.controls}>
         <MyButton
-          title="Submit"
+          title="Edit"
           onPress={handleSubmit(onSubmit as SubmitHandler<FieldValues>)}
         />
       </View>
@@ -106,7 +105,7 @@ const Form: React.FC = () => {
   );
 };
 
-export default Form;
+export default FormEdit;
 
 const styles = StyleSheet.create({
   containerInput: {
