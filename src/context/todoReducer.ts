@@ -6,6 +6,7 @@ type TodoAction = | {type: 'createTask', payload:TodoState}
                   | {type: 'completeTask', payload:number}
                   | {type: 'filterTask', payload: string}
                   | {type: 'allTasks'}
+                  | {type: 'updateTodos', payload:TodoState[]}
 
 
 export const todoReducer = (state:TodoState[], action: TodoAction): TodoState[] => {
@@ -35,6 +36,9 @@ export const todoReducer = (state:TodoState[], action: TodoAction): TodoState[] 
     
     case 'allTasks':
       return todoInitialState;
+
+    case 'updateTodos':
+      return action.payload;
 
     default:
       return state;

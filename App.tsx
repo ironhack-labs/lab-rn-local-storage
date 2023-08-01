@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { View } from 'react-native'
 import { s } from './src/theme/TodoTheme';

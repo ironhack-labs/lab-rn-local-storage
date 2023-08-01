@@ -9,6 +9,7 @@ export const CardTodo = ({detail, onDeleteTask, onCompleteTask}: {detail?: boole
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const {todoState, filterTask, allTasks} = useContext(TodoContext);
+  
   const filteredCategoriesDuplicated = new Set(todoState.map(todo => (todo.category)))
 
   const filteredCategories = Array.from(filteredCategoriesDuplicated);
