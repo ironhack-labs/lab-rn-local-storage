@@ -56,7 +56,9 @@ const Task: React.FC<TTask> = ({title, description, category, status, id}) => {
 
         <View style={styles.row}>
           <Text style={styles.label}>Status: </Text>
-          <Text style={[styles.text, {color: status ? 'green' : 'black'}]}>{status ? 'Completed' : 'Pending'}</Text>
+          <Text style={[styles.text, {color: status ? 'green' : 'black'}]}>
+            {status ? 'Completed' : 'Pending'}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -69,8 +71,9 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 10,
     paddingHorizontal: 10,
+    marginTop: 10,
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: '#D1D1D1',
     borderRadius: 10,
   },
   text: {
