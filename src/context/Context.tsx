@@ -28,7 +28,6 @@ const AppReducer = (state: AppState, action: Action): AppState => {
         throw new Error('No saved storage');
       }
     case 'ADD_TASKS':
-      console.log('action.payload --> ', action.payload);
       try {
         return {
           ...state,
@@ -38,6 +37,7 @@ const AppReducer = (state: AppState, action: Action): AppState => {
         throw new Error('No load storage');
       }
     default:
+      console.log('Action no defined');
       break;
   }
   return state;
