@@ -8,6 +8,7 @@ type AppState = {
   addTasks: (tasks: Tasks) => void;
   removeTask: (task: Task) => void;
   editTask: (task: Task) => void;
+  filterTasks: (category: string) => void;
 };
 
 const initialState: AppState = {
@@ -16,6 +17,7 @@ const initialState: AppState = {
   addTasks: () => {},
   removeTask: () => {},
   editTask: () => {},
+  filterTasks: () => {},
 };
 
 const AppReducer = (state: AppState, action: Action): AppState => {
@@ -69,6 +71,17 @@ const AppReducer = (state: AppState, action: Action): AppState => {
       } catch (error) {
         throw new Error('No load storage');
       }
+    // case 'FILTER_TASKS':
+    //   try {
+    //     let copyTasks = JSON.parse(await AsyncStorage.getItem('tasks')) || [];
+    //     newTasks = copyTasks.filter(task => task.category === action.payload);
+    //     return {
+    //       ...state,
+    //       tasks: newTasks,
+    //     };
+    //   } catch (error) {
+    //     throw new Error('Error filter');
+    //   }
     default:
       console.log('Action no defined');
       break;
@@ -97,7 +110,11 @@ export const AppProvider = ({children}: {children: React.ReactNode}) => {
     dispatch({type: 'REMOVE_TASK', payload: task});
   };
 
-  const value = {tasks, addTask, editTask, addTasks, removeTask};
+  const filterTasks = (category: string) => {
+    dispatch({type: 'FILTER_TASKS', payload: category});
+  };
+
+  const value = {tasks, addTask, editTask, addTasks, removeTask, filterTasks};
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };

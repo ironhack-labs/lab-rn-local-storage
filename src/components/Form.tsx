@@ -22,12 +22,12 @@ const Form: React.FC = () => {
     id: Date.now(),
   };
 
-  const {editTask} = useApp();
+  const {addTask} = useApp();
 
   const onSubmit = (formData: Task) => {
     formData.id = Date.now();
     try {
-      editTask(formData);
+      addTask(formData);
       reset();
     } catch (error) {
       console.log(error);

@@ -1,14 +1,37 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Task from '../components/Task';
 import {useApp} from '../context/Context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Tasks} from '../types/types';
 
 const Header = () => {
+  const {filterTasks} = useApp();
   return (
     <View style={styles.header}>
-      <Text>.</Text>
+      <Text>Filter:</Text>
+      <View style={styles.row}>
+        <TouchableOpacity onPress={() => filterTasks('uncategorized')}>
+          <View style={styles.catItem}>
+            <Text style={styles.catItemText}>uncategorized</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => filterTasks('school')}>
+          <View style={styles.catItem}>
+            <Text style={styles.catItemText}>school</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => filterTasks('work')}>
+          <View style={styles.catItem}>
+            <Text style={styles.catItemText}>work</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => filterTasks('home')}>
+          <View style={styles.catItem}>
+            <Text style={styles.catItemText}>home</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -74,5 +97,19 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'stretch',
+  },
+  catItem: {
+    paddingVertical: 3,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    backgroundColor: 'blue',
+    alignSelf: 'flex-start',
+    marginRight: 10,
+  },
+  catItemText: {
+    color: 'white',
+  },
+  row: {
+    flexDirection: 'row',
   },
 });
