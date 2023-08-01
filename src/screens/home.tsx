@@ -4,12 +4,10 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  Button,
   TouchableOpacity,
   ListRenderItem,
 } from 'react-native';
-import SelectDropdown from 'react-native-select-dropdown';
-
+import { Button, Dropdown } from '../components';
 import { HomeProps } from '../navigation/types';
 import { Task, Category } from '../types';
 import { useTaskList } from '../hooks';
@@ -21,50 +19,103 @@ export default function HomeScreen({ navigation }: HomeProps) {
 
   const renderItem: ListRenderItem<Task> = ({ item }) => {
     return (
-      <TouchableOpacity
-        onPress={() => navigation.navigate('TaskDetail', { id: item.id })}>
-        <Text>{item.id}</Text>
-        <Text>{item.title}</Text>
-        <Text>{item.category}</Text>
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity
+          style={styles.taskContainer}
+          onPress={() => navigation.navigate('TaskDetail', { id: item.id })}>
+          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.category}>{item.category}</Text>
+        </TouchableOpacity>
+      </View>
     );
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Home Screen</Text>
+      <View style={styles.content}>
+        <View style={styles.listContainer}>
+          <View style={styles.dropdownContainer}>
+            <Dropdown
+              data={categories}
+              defaultValue={'ALL'}
+              onSelect={(selectedItem, index) => {
+                setCategory(selectedItem);
+              }}
+            />
+          </View>
 
-      <SelectDropdown
-        data={categories}
-        defaultValue={'ALL'}
-        onSelect={(selectedItem, index) => {
-          setCategory(selectedItem);
-        }}
-      />
-
-      <Button
-        title="Create New"
-        onPress={() => navigation.navigate('TaskCreation')}
-      />
-      <FlatList
-        data={taskList}
-        keyExtractor={task => task.id}
-        renderItem={renderItem}
-      />
+          <FlatList
+            data={taskList}
+            keyExtractor={task => task.id}
+            renderItem={renderItem}
+          />
+        </View>
+        <View style={styles.actions}>
+          <View style={styles.buttonContainer}>
+            <Button
+              text="Create New"
+              onPress={() => navigation.navigate('TaskCreation')}
+            />
+          </View>
+        </View>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  taskContainer: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+
+    height: 45,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dropdownContainer: {
+    alignItems: 'flex-end',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  title: {
+    color: '#666',
+    paddingLeft: 10,
+    flex: 1,
+  },
+  category: {
+    fontSize: 12,
+    color: '#666',
+    textAlign: 'center',
+    width: 80,
+  },
+
   container: {
-    paddingTop: 20,
     paddingHorizontal: 20,
+    paddingBottom: 0,
     backgroundColor: 'white',
     flex: 1,
   },
-  title: {
-    fontSize: 24,
-    color: '#666',
-    marginBottom: 20,
+  content: {
+    justifyContent: 'space-between',
+    flex: 1,
+  },
+  listContainer: {
+    flex: 1,
+  },
+  actions: {
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    height: 100,
+  },
+  buttonContainer: {
+    width: 150,
   },
 });

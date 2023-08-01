@@ -11,7 +11,6 @@ export default function useTaskList() {
   }
 
   function filterTaskListByCategory(category: Category) {
-    console.log('filterTaskListByCategory', cartContext.taskList);
     if (category === 'ALL') {
       return cartContext.taskList;
     }

@@ -120,9 +120,6 @@ export function TaskProvider({ children }: ProviderProps) {
       const data: TaskList = JSON.parse(dataFromStorage);
       const updatedData = data.filter((item: Task) => item.id !== id);
 
-      const ids = updatedData.map(item => item.id);
-      console.log(`deleteTask ${id}`, ids);
-
       await AsyncStorage.setItem(
         'RN_LAB_LOCAL_STORAGE::taskList',
         JSON.stringify(updatedData),
@@ -143,10 +140,7 @@ export function TaskProvider({ children }: ProviderProps) {
         'RN_LAB_LOCAL_STORAGE::taskList',
       );
 
-      // console.log('-> dataFromStorage', dataFromStorage);
-
       if (dataFromStorage === null || dataFromStorage === '[]') {
-        console.log('... save TASKS in localstorage');
         await AsyncStorage.setItem(
           'RN_LAB_LOCAL_STORAGE::taskList',
           JSON.stringify(TASKS),
@@ -158,7 +152,6 @@ export function TaskProvider({ children }: ProviderProps) {
         });
       } else {
         const taskList = JSON.parse(dataFromStorage);
-        console.log('SET_DEFAULT_TASKS', taskList);
 
         dispatch({
           type: 'SET_DEFAULT_TASKS',

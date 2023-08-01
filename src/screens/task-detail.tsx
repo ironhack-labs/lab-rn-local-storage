@@ -17,35 +17,73 @@ export default function TaskDetailScreen({
 
   return task ? (
     <View style={styles.container}>
-      <Text style={styles.title}>Task Detail</Text>
-      <Text>{task.title}</Text>
-      <Text>{task.description}</Text>
-      <Text>{task.category}</Text>
-      <Switch
-        trackColor={{ false: '#767577', true: '#81b0ff' }}
-        onValueChange={() => updateTaskStatus(task.id)}
-        value={task.completed}
-      />
+      <View style={styles.category}>
+        <Text style={styles.smallText}>{task.category}</Text>
+      </View>
+      <View style={styles.content}>
+        <Text style={styles.title}>{task.title}</Text>
+        <Text style={styles.description}>{task.description}</Text>
+      </View>
 
-      <Button
-        title="Delete"
-        color={'red'}
-        onPress={() => handleDeleteTask(task.id)}
-      />
+      <View style={styles.actions}>
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Delete"
+            color={'red'}
+            onPress={() => handleDeleteTask(task.id)}
+          />
+        </View>
+
+        <View style={styles.switchContainer}>
+          <Text style={styles.smallText}>Mark as completed:</Text>
+          <Switch
+            onValueChange={() => updateTaskStatus(task.id)}
+            value={task.completed}
+          />
+        </View>
+      </View>
     </View>
   ) : null;
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
-    paddingHorizontal: 20,
+    padding: 20,
+    paddingBottom: 0,
     backgroundColor: 'white',
     flex: 1,
   },
+  category: {
+    alignItems: 'flex-end',
+  },
+  content: {
+    flex: 1,
+  },
+  actions: {
+    height: 100,
+    flexDirection: 'row',
+  },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     color: '#666',
-    marginBottom: 20,
+    marginBottom: 10,
+  },
+  description: {
+    color: '#666',
+    fontSize: 16,
+  },
+  buttonContainer: {
+    width: '40%',
+    justifyContent: 'center',
+  },
+  switchContainer: {
+    width: '60%',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  smallText: {
+    fontSize: 12,
+    color: '#666',
+    marginBottom: 10,
   },
 });
