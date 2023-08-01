@@ -17,9 +17,10 @@ const initialState: AppState = {
 };
 
 const AppReducer = (state: AppState, action: Action): AppState => {
+  let newTasks = [];
   switch (action.type) {
     case 'ADD_TASK':
-      let newTasks = [...state.tasks, action.payload];
+      newTasks = [...state.tasks, action.payload];
       try {
         AsyncStorage.setItem('tasks', JSON.stringify(newTasks));
         return {
@@ -40,9 +41,7 @@ const AppReducer = (state: AppState, action: Action): AppState => {
       }
     case 'REMOVE_TASK':
       try {
-        let newTasks = state.tasks.filter(
-          task => task.id !== action.payload.id,
-        );
+        newTasks = state.tasks.filter(task => task.id !== action.payload.id);
         AsyncStorage.setItem('tasks', JSON.stringify(newTasks));
         return {
           ...state,
