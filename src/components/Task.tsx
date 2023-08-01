@@ -4,14 +4,15 @@ import {Task as TTask} from '../types/types';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {NavListBase} from '../navigation/NavListBase';
 
-const Task: React.FC<TTask> = ({title, description, category, status}) => {
+const Task: React.FC<TTask> = ({title, description, category, status, id}) => {
   const {navigate} = useNavigation<NavigationProp<NavListBase>>();
 
   const [data, setData] = useState<TTask>({
     title: '',
     description: '',
-    category: '',
+    category: 'uncategorized',
     status: false,
+    id: 0,
   });
 
   useEffect(() => {
@@ -20,8 +21,9 @@ const Task: React.FC<TTask> = ({title, description, category, status}) => {
       description,
       category,
       status,
+      id,
     });
-  }, [category, description, status, title]);
+  }, [category, description, status, title, id]);
 
   const shortText = (text: string, maxLength: number) => {
     if (text.length > maxLength) {

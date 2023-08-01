@@ -3,8 +3,9 @@ import {View, Text, StyleSheet} from 'react-native';
 import GoBackBtn from '../components/GoBackBtn';
 import MyButton from '../components/MyButton';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RouteProp} from '@react-navigation/native';
+import {RouteProp, useNavigation} from '@react-navigation/native';
 import {NavListBase} from '../navigation/NavListBase';
+import {useApp} from '../context/Context';
 
 type DetailsScreenProps = {
   navigation: StackNavigationProp<NavListBase, 'TaskDetails'>;
@@ -13,7 +14,15 @@ type DetailsScreenProps = {
 
 const TaskDetails: React.FC<DetailsScreenProps> = ({route}) => {
   const {title, description, category, status} = route.params;
+  const {removeTask} = useApp();
+  const {goBack} = useNavigation();
 
+  const handleRemove = () => {
+    console.log('route.params --> ', route.params);
+    
+    removeTask(route.params);
+    goBack();
+  };
   return (
     <View>
       <GoBackBtn />
@@ -24,7 +33,10 @@ const TaskDetails: React.FC<DetailsScreenProps> = ({route}) => {
         <Text style={styles.text}>{category}</Text>
         <Text style={styles.text}>{status}</Text>
         <View style={styles.options}>
-          <MyButton title="Delete task" onPress={() => {}} />
+          <MyButton
+            title="Delete task"
+            onPress={() => handleRemove()}
+          />
         </View>
       </View>
     </View>
