@@ -32,7 +32,7 @@ export const TaskListScreen = () => {
 
   useEffect(() => {
     setTasks(list);
-  }, [list.length]);
+  }, [list]);
 
   useEffect(() => {
     if (filters.length) {
