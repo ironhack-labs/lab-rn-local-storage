@@ -1,0 +1,30 @@
+[
+    {
+        "id": "1",
+        "name": "app1",
+        "description": "app1 description",
+        "status": "active",
+        "type": "Feature"
+    },
+    {
+        "id": "2",
+        "name": "app2",
+        "description": "app2 description",
+        "status": "active",
+        "type": "BugFix"
+    },
+    {
+        "id": "3",
+        "name": "app3",
+        "description": "app3 description",
+        "status": "active",
+        "type": "BugFix"
+    },
+    {
+        "id": "4",
+        "name": "app4",
+        "description": "app4 description",
+        "status": "active",
+        "type": "HotFix"
+    }
+]
