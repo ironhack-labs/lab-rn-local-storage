@@ -1,23 +1,42 @@
 import {createContext, useContext, useReducer} from 'react';
-import {Action, Task} from '../types/types';
+import {Action, Task, Tasks} from '../types/types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type AppState = {
   tasks: Task[];
-  addTask: (taks: Task) => void;
+  addTask: (task: Task) => void;
+  addTasks: (tasks: Tasks) => void;
 };
 
 const initialState: AppState = {
   tasks: [],
   addTask: () => {},
+  addTasks: () => {},
 };
 
 const AppReducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
     case 'ADD_TASK':
-      return {
-        ...state,
-        tasks: [...state.tasks, action.payload],
-      };
+      let newTasks = [...state.tasks, action.payload];
+      try {
+        AsyncStorage.setItem('tasks', JSON.stringify(newTasks));
+        return {
+          ...state,
+          tasks: newTasks,
+        };
+      } catch (error) {
+        throw new Error('No saved storage');
+      }
+    case 'ADD_TASKS':
+      console.log('action.payload --> ', action.payload);
+      try {
+        return {
+          ...state,
+          tasks: action.payload,
+        };
+      } catch (error) {
+        throw new Error('No load storage');
+      }
     default:
       break;
   }
@@ -33,7 +52,11 @@ export const AppProvider = ({children}: {children: React.ReactNode}) => {
     dispatch({type: 'ADD_TASK', payload: task});
   };
 
-  const value = {tasks, addTask};
+  const addTasks = (loadTasks: Tasks) => {
+    dispatch({type: 'ADD_TASKS', payload: loadTasks});
+  };
+
+  const value = {tasks, addTask, addTasks};
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };

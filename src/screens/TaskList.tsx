@@ -1,16 +1,36 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import Task from '../components/Task';
 import {useApp} from '../context/Context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import MyButton from '../components/MyButton';
+import {Tasks} from '../types/types';
 
 const TaskList = () => {
-  const {tasks} = useApp();
+  const {tasks, addTasks} = useApp();
+  const [items, setItems] = useState<Tasks>([]);
+  useEffect(() => {
+    AsyncStorage.getItem('tasks').then(res => {
+      console.log('res --> ', res);
+      if (res) {
+        addTasks(JSON.parse(res));
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    setItems(tasks);
+  }, [tasks]);
+
+  const handleRemoveAll = () => {
+    AsyncStorage.removeItem('tasks');
+  };
 
   return (
     <FlatList
       style={styles.container}
       initialNumToRender={5}
-      data={tasks}
+      data={items}
       renderItem={({item}) => (
         <Task
           title={item.title}
@@ -26,6 +46,9 @@ const TaskList = () => {
       ListEmptyComponent={<Text style={styles.noItems}>No items</Text>}
       ListFooterComponentStyle={styles.footerList}
       ListFooterComponent={<View />}
+      ListHeaderComponent={<View style={styles.header}>
+        <MyButton title="Remove all" onPress={handleRemoveAll} />
+      </View>}
     />
   );
 };
@@ -43,5 +66,8 @@ const styles = StyleSheet.create({
   },
   footerList: {
     height: 60,
+  },
+  header: {
+    alignItems: 'flex-end',
   },
 });

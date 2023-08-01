@@ -1,7 +1,9 @@
+export type Category = 'uncategorized' | 'school' | 'work' | 'home';
+
 export type Task = {
   title: string;
   description: string;
-  category: string;
+  category: Category;
   status: boolean;
   id: number;
 };
@@ -15,4 +17,5 @@ export type BtnType = {
 
 export type Action =
   | {type: 'ADD_TASK'; payload: Task}
+  | {type: 'ADD_TASKS'; payload: Tasks}
   | {type: 'REMOVE_TASK'; payload: Task};
