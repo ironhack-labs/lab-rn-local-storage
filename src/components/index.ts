@@ -1,4 +1,4 @@
 export { BottomTab } from './BottomTab/BottomTab';
-export { CartTodo } from './CardTodo';
+export { CardTodo } from './CardTodo';
 export { Header } from './Header';
-export {CreateTask} from './CreateTask';
+export { CreateTask } from './CreateTask';

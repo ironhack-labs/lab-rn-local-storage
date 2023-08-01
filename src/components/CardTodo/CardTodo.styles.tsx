@@ -21,6 +21,30 @@ export const s = StyleSheet.create({
   },
   description: {
     fontSize: 20
+  },
+  taskDetail: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 25,
+    fontWeight: 'bold'
+  },
+  descripcionSpace: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonBox: {
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10
+  },
+  actionButtons: {
+    marginTop: 10,
+  },
+  taskTitleAction: {
+    fontSize: 20,
+    color: 'white',
+    textAlign: 'center'
   }
-
 })

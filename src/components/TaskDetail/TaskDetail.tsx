@@ -1,10 +1,19 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import React, { useContext } from 'react'
+import { CardTodo } from '../CardTodo'
+import { TodoContext } from '../../context/TodoContext';
 
 export const TaskDetail = () => {
+  const {deleteTask, completeTask} = useContext(TodoContext);
+
+  const handleDeleteTask = (id: number) => {
+    deleteTask(id)
+  }
+
   return (
-    <View>
-      <Text>Task Detail</Text>
-    </View>
+    <CardTodo 
+      detail 
+      onDeleteTask={handleDeleteTask}
+      onCompleteTask={completeTask}
+    />
   )
 }
