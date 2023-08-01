@@ -19,9 +19,9 @@ const TaskDetails: React.FC<DetailsScreenProps> = ({route}) => {
     goBack();
   };
   return (
-    <View>
-      <GoBackBtn />
-      <View style={styles.containerDetails}>
+    <View style={styles.container}>
+      <View>
+        <GoBackBtn />
         <FormEdit
           title={title}
           description={description}
@@ -29,9 +29,9 @@ const TaskDetails: React.FC<DetailsScreenProps> = ({route}) => {
           status={status}
           id={id}
         />
-        <View style={styles.options}>
-          <MyButton title="Delete task" onPress={() => handleRemove()} />
-        </View>
+      </View>
+      <View style={styles.options}>
+        <MyButton title="Delete task" onPress={() => handleRemove()} />
       </View>
     </View>
   );
@@ -40,13 +40,16 @@ const TaskDetails: React.FC<DetailsScreenProps> = ({route}) => {
 export default TaskDetails;
 
 const styles = StyleSheet.create({
-  containerDetails: {
-    marginVertical: 10,
+  container: {
+    padding: 10,
+    flex: 1,
+    justifyContent: 'space-between',
   },
   text: {
     marginBottom: 10,
   },
   options: {
     alignItems: 'center',
+    paddingBottom: 20,
   },
 });

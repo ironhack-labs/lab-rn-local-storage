@@ -35,7 +35,7 @@ const FormEdit: React.FC<TTask> = ({
 
   return (
     <View>
-      <View>
+      <View style={styles.inputForm}>
         <Controller
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
@@ -55,7 +55,7 @@ const FormEdit: React.FC<TTask> = ({
         {errors.title && <Text>{errors.title.message}</Text>}
       </View>
 
-      <View>
+      <View style={styles.inputForm}>
         <Controller
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
@@ -75,7 +75,7 @@ const FormEdit: React.FC<TTask> = ({
         {errors.description && <Text>{errors.description.message}</Text>}
       </View>
 
-      <View>
+      <View style={styles.inputForm}>
         <Controller
           control={control}
           render={({field: {onChange, onBlur, value}}) => (
@@ -95,14 +95,17 @@ const FormEdit: React.FC<TTask> = ({
         {errors.description && <Text>{errors.description.message}</Text>}
       </View>
 
-      <View>
+      <View style={styles.inputForm}>
         <Controller
           control={control}
           render={({field: {onChange, value}}) => (
-            <Switch
-              value={value}
-              onValueChange={newValue => onChange(newValue)}
-            />
+            <View style={styles.status}>
+              <Text>Status: </Text>
+              <Switch
+                value={value}
+                onValueChange={newValue => onChange(newValue)}
+              />
+            </View>
           )}
           name="status" // Nombre del campo en el estado del formulario
           defaultValue={!!status} // Valor predeterminado para el Switch
@@ -134,5 +137,12 @@ const styles = StyleSheet.create({
   },
   controls: {
     alignItems: 'center',
+  },
+  status: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  inputForm: {
+    marginBottom: 10,
   },
 });

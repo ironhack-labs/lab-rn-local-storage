@@ -6,10 +6,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Tasks} from '../types/types';
 
 const Header = () => {
-
   return (
     <View style={styles.header}>
-      <Text>Header</Text>
+      <Text>.</Text>
     </View>
   );
 };

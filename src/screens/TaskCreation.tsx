@@ -4,7 +4,7 @@ import Form from '../components/Form';
 
 const TaskCreation = () => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.title}>Details of the new task</Text>
       <Form />
     </View>
@@ -14,6 +14,9 @@ const TaskCreation = () => {
 export default TaskCreation;
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+  },
   title: {
     textAlign: 'center',
     marginVertical: 10,
