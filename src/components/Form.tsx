@@ -1,36 +1,35 @@
 /* eslint-disable react/react-in-jsx-scope */
+import {useState} from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
-import {useForm, Controller} from 'react-hook-form';
+import {useForm, Controller, Control, SubmitHandler, FieldValues} from 'react-hook-form';
 import {FormData} from '../../interfaces/interfaces';
 import MyButton from './MyButton';
 import {useApp} from '../context/Context';
-import {Task, Category} from '../types/types';
+import {Task} from '../types/types';
 
 const Form: React.FC = () => {
   const {
     control,
     handleSubmit,
     formState: {errors},
+    reset,
   } = useForm<FormData>();
 
-  const {addTask} = useApp();
-
-  const category: Category = 'uncategorized';
-
-  const defaultData: Task = {
+  const defaultData:Task = {
     title: '',
     description: '',
-    category: '',
+    category: 'uncategorized',
     status: false,
     id: Date.now(),
   };
 
-  const onSubmit = (data: FormData) => {
-    console.log('data --> ', data);
-    data.id = Date.now();
-    data.category = data.category.toLocaleLowerCase();
+  const {addTask} = useApp();
+
+  const onSubmit = (formData: Task) => {
+    formData.id = Date.now();
     try {
-      addTask(data);
+      addTask(formData);
+      reset();
     } catch (error) {
       console.log(error);
     }
@@ -99,7 +98,10 @@ const Form: React.FC = () => {
       </View>
 
       <View style={styles.controls}>
-        <MyButton title="Submit" onPress={handleSubmit(onSubmit)} />
+        <MyButton
+          title="Submit"
+          onPress={handleSubmit(onSubmit as SubmitHandler<FieldValues>)}
+        />
       </View>
     </View>
   );
