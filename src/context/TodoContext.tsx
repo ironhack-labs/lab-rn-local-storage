@@ -14,6 +14,8 @@ export interface TodoContextProps {
   createTask: (task: TodoState) => void;
   deleteTask: (id: number) => void;
   completeTask: (id: number) => void;
+  filterTask: (category: string) => void;
+  allTasks: () => void;
 }
 
 export const todoInitialState: TodoState[] =  [
@@ -102,12 +104,27 @@ export const TodoProvider = ({children}: {children: JSX.Element[]}) => {
     })
   }
 
+  const filterTask = (category: string) => {
+    dispatch({
+      type: 'filterTask',
+      payload: category
+    })
+  }
+
+  const allTasks = () => {
+    dispatch({
+      type: 'allTasks'
+    })
+  }
+
   return (
     <TodoContext.Provider value={{
       todoState,
       createTask,
       deleteTask,
-      completeTask
+      completeTask,
+      filterTask,
+      allTasks
     }}>
       {children}
     </TodoContext.Provider>

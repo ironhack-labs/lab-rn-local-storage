@@ -46,5 +46,25 @@ export const s = StyleSheet.create({
     fontSize: 20,
     color: 'white',
     textAlign: 'center'
+  },
+  comboFilter: {
+    padding: 20
+  },
+  filterTitle: {
+    fontSize: 20
+  },
+  filterButton: {
+    backgroundColor: '#7CB518',
+    marginTop: 10,
+    padding: 20
+  },
+  toggleFilter: {
+    fontSize: 20,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    marginBottom: 30
+  },
+  colorFilterBy: {
+    color: 'white'
   }
 })

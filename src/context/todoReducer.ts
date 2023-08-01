@@ -3,7 +3,9 @@ import { TodoState, todoInitialState } from './TodoContext';
 
 type TodoAction = | {type: 'createTask', payload:TodoState}
                   | {type: 'deleteTask', payload:number}
-                  | {type: 'completeTask', payload:number};
+                  | {type: 'completeTask', payload:number}
+                  | {type: 'filterTask', payload: string}
+                  | {type: 'allTasks'}
 
 
 export const todoReducer = (state:TodoState[], action: TodoAction): TodoState[] => {
@@ -28,6 +30,11 @@ export const todoReducer = (state:TodoState[], action: TodoAction): TodoState[] 
         return todo
       })
 
+    case 'filterTask':
+      return state.filter(todo => (todo.category === action.payload))
+    
+    case 'allTasks':
+      return todoInitialState;
 
     default:
       return state;
