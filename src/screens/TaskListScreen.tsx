@@ -1,4 +1,4 @@
-import {Button, FlatList, View} from 'react-native';
+import {Button, FlatList, View, Text} from 'react-native';
 import {TaskT, useTask} from '../context/taskContext';
 import {Task} from '../components/Task';
 import appStyles from '../styles';
@@ -8,6 +8,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackNavigatonT} from '../../navigation/AppNavigator';
 import {FloatingButton} from '../components/FloatingButton';
 import {CategoryFilterModal} from '../components/CategoryFilterModal';
+import styles from '../theme/TaskListScreen.styles';
 
 export const TaskListScreen = () => {
   const {list, filters} = useTask();
@@ -46,11 +47,16 @@ export const TaskListScreen = () => {
   }, [filters.length, tasks.length]);
 
   return (
-    <View style={appStyles.container}>
+    <View style={[appStyles.container, styles.container]}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Title</Text>
+        <Text style={styles.headerText}>Category</Text>
+      </View>
       <FlatList
         data={tasks}
         renderItem={renderItem}
         keyExtractor={item => item.id}
+        contentContainerStyle={styles.list}
       />
 
       <FloatingButton onPress={() => navigate('TaskCreation')} />
