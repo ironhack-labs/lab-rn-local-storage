@@ -5,6 +5,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: colors.blue,
   },
   text: {

@@ -30,6 +30,10 @@ export const TaskListScreen = () => {
   }, []);
 
   useEffect(() => {
+    setTasks(list);
+  }, [list.length]);
+
+  useEffect(() => {
     if (filters.length) {
       const tasksFiltered = tasks.filter(task =>
         filters.includes(task.category),
@@ -39,7 +43,7 @@ export const TaskListScreen = () => {
     } else {
       setTasks(list);
     }
-  }, [filters.length]);
+  }, [filters.length, tasks.length]);
 
   return (
     <View style={appStyles.container}>

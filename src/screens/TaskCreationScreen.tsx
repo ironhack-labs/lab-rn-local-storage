@@ -1,5 +1,5 @@
 import {Controller, useForm} from 'react-hook-form';
-import {Button, TextInput, View} from 'react-native';
+import {TextInput, View, Text} from 'react-native';
 import {TaskT, useTask} from '../context/taskContext';
 import {useNavigation} from '@react-navigation/native';
 import uuid from 'react-native-uuid';
@@ -10,6 +10,7 @@ import styles from '../theme/TaskCreationScreen.styles';
 import Picker from 'react-native-picker-select';
 import {useState} from 'react';
 import {CategoryModal} from '../components/CategoryModal';
+import {Button} from '../components/Button';
 
 export const TaskCreationScreen = () => {
   const {categories, addTask} = useTask();
@@ -33,50 +34,62 @@ export const TaskCreationScreen = () => {
   };
 
   return (
-    <View style={appStyles.container}>
-      <Controller
-        name="title"
-        defaultValue=""
-        control={control}
-        rules={{required: 'Title is required'}}
-        render={({field: {onChange, value}}) => (
-          <TextInput
-            value={value}
-            onChangeText={onChange}
-            placeholder="Type a title"
-          />
-        )}
-      />
-      <View>
+    <View style={[appStyles.container, styles.container]}>
+      <View style={styles.controllerContainer}>
+        <Text style={styles.label}>Title</Text>
         <Controller
-          name="category"
+          name="title"
+          defaultValue=""
           control={control}
-          rules={{required: 'Category is required'}}
+          rules={{required: 'Title is required'}}
           render={({field: {onChange, value}}) => (
-            <Picker
+            <TextInput
               value={value}
-              style={styles.dropdown}
-              onValueChange={onChange}
-              items={selectCategories}
+              style={styles.text}
+              onChangeText={onChange}
+              placeholder="Type a title"
             />
           )}
         />
-        <Button title="Add category" onPress={toggleModal} />
       </View>
-      <Controller
-        name="description"
-        defaultValue=""
-        control={control}
-        rules={{required: 'Description is required'}}
-        render={({field: {onChange, value}}) => (
-          <TextInput
-            value={value}
-            onChangeText={onChange}
-            placeholder="Description goes here"
-          />
-        )}
-      />
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+      <View>
+        <Text style={styles.label}>Category</Text>
+        <View style={styles.categoryContainer}>
+          <View>
+            <Controller
+              name="category"
+              control={control}
+              rules={{required: 'Category is required'}}
+              render={({field: {onChange, value}}) => (
+                <Picker
+                  value={value}
+                  onValueChange={onChange}
+                  items={selectCategories}
+                />
+              )}
+            />
+          </View>
+          <Button text="+" onPress={toggleModal} buttonStyles={styles.button} />
+        </View>
+      </View>
+      <View>
+        <Text style={styles.label}>Description</Text>
+        <Controller
+          name="description"
+          defaultValue=""
+          control={control}
+          rules={{required: 'Description is required'}}
+          render={({field: {onChange, value}}) => (
+            <TextInput
+              value={value}
+              style={styles.text}
+              onChangeText={onChange}
+              placeholder="Description goes here"
+            />
+          )}
+        />
+      </View>
+      <Button text="Submit" onPress={handleSubmit(onSubmit)} />
       <CategoryModal isVisible={showModalCategory} toggleModal={toggleModal} />
     </View>
   );
