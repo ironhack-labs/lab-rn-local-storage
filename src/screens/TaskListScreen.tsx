@@ -13,18 +13,6 @@ const TaskListScreen = () => {
 
   const navigation = useNavigation();
 
-  // const handleCategoryChange = (category: string) => {
-  //   dispatch({type: 'SELECT_CATEGORY', payload: category});
-
-  //   if (category === 'All') {
-  //     setFilteredTasks(tasks);
-  //   } else {
-  //     setFilteredTasks(tasks.filter(task => task.category === category));
-  //   }
-
-  //   setSearchText('');
-  // };
-
   const handleSearchChange = (text: string) => {
     setSearchText(text);
     filterTasks(selectedCategory, text);
@@ -63,14 +51,6 @@ const TaskListScreen = () => {
   return (
     <View style={globalStyles.container}>
       <Text style={globalStyles.titleText}>Task List Screen</Text>
-      {/* <Picker
-        selectedValue={selectedCategory}
-        onValueChange={handleCategoryChange}>
-        <Picker.Item label="All" value="All" />
-        {categories.map(category => (
-          <Picker.Item key={category} label={category} value={category} />
-        ))}
-      </Picker> */}
       <TextInput
         placeholder="Search tasks"
         value={searchText}
