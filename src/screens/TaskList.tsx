@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import Task from '../components/Task';
 import {useApp} from '../context/Context';
 
@@ -8,6 +8,8 @@ const TaskList = () => {
 
   return (
     <FlatList
+      style={styles.container}
+      initialNumToRender={5}
       data={tasks}
       renderItem={({item}) => (
         <Task
@@ -21,8 +23,25 @@ const TaskList = () => {
       keyExtractor={item => {
         return item.id;
       }}
+      ListEmptyComponent={<Text style={styles.noItems}>No items</Text>}
+      ListFooterComponentStyle={styles.footerList}
+      ListFooterComponent={<View />}
     />
   );
 };
 
 export default TaskList;
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 10,
+    paddingTop: 10,
+  },
+  noItems: {
+    textAlign: 'center',
+    paddingVertical: 10,
+  },
+  footerList: {
+    height: 60,
+  },
+});
