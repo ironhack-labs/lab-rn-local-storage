@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Button, Switch, StyleSheet } from 'react-native';
-import { useTaskList } from '../context';
+import { useTaskList } from '../hooks';
 import { TaskDetailProps } from '../navigation/types';
 
 export default function TaskDetailScreen({

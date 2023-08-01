@@ -12,7 +12,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 
 import { HomeProps } from '../navigation/types';
 import { Task, Category } from '../types';
-import { useTaskList } from '../context';
+import { useTaskList } from '../hooks';
 
 export default function HomeScreen({ navigation }: HomeProps) {
   const [category, setCategory] = useState<Category>('ALL');

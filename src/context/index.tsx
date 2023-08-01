@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TASKS, CATEGORIES } from '../mock-tasks';
-import { Task, TaskList, Category } from '../types';
+import { Task, TaskList } from '../types';
 
 interface ProviderProps {
   children: React.ReactNode;
@@ -158,6 +158,7 @@ export function TaskProvider({ children }: ProviderProps) {
         });
       } else {
         const taskList = JSON.parse(dataFromStorage);
+        console.log('SET_DEFAULT_TASKS', taskList);
 
         dispatch({
           type: 'SET_DEFAULT_TASKS',
@@ -175,27 +176,4 @@ export function TaskProvider({ children }: ProviderProps) {
       {children}
     </TaskListContext.Provider>
   );
-}
-
-export function useTaskList() {
-  const cartContext = useContext(TaskListContext);
-
-  function getTaskById(id: string) {
-    const tasks = cartContext.taskList.filter(item => item.id === id);
-    return tasks.length ? tasks[0] : null;
-  }
-
-  function filterTaskListByCategory(category: Category) {
-    if (category === 'ALL') {
-      return cartContext.taskList;
-    }
-
-    return cartContext.taskList.filter(item => item.category === category);
-  }
-
-  return {
-    ...cartContext,
-    getTaskById,
-    filterTaskListByCategory,
-  };
 }
