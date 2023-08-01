@@ -56,7 +56,7 @@ const Task: React.FC<TTask> = ({title, description, category, status, id}) => {
 
         <View style={styles.row}>
           <Text style={styles.label}>Status: </Text>
-          <Text style={styles.text}>{status ? 'Completed' : 'Pending'}</Text>
+          <Text style={[styles.text, {color: status ? 'green' : 'black'}]}>{status ? 'Completed' : 'Pending'}</Text>
         </View>
       </TouchableOpacity>
     </View>

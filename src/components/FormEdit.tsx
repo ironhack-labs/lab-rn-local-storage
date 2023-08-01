@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {View, Text, TextInput, StyleSheet, Switch} from 'react-native';
 import {useForm, Controller, SubmitHandler, FieldValues} from 'react-hook-form';
 import {FormData} from '../../interfaces/interfaces';
 import MyButton from './MyButton';
@@ -26,7 +26,7 @@ const FormEdit: React.FC<TTask> = ({
 
   const onSubmit = (formData: TTask) => {
     try {
-      editTask({...formData, status, id});
+      editTask({...formData, id});
       goBack();
     } catch (error) {
       console.log(error);
@@ -93,6 +93,20 @@ const FormEdit: React.FC<TTask> = ({
           defaultValue={category}
         />
         {errors.description && <Text>{errors.description.message}</Text>}
+      </View>
+
+      <View>
+        <Controller
+          control={control}
+          render={({field: {onChange, value}}) => (
+            <Switch
+              value={value}
+              onValueChange={newValue => onChange(newValue)}
+            />
+          )}
+          name="status" // Nombre del campo en el estado del formulario
+          defaultValue={!!status} // Valor predeterminado para el Switch
+        />
       </View>
 
       <View style={styles.controls}>
